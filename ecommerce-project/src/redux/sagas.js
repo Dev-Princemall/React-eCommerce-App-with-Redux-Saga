@@ -1,10 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
+import axios from "axios";
 import {
   FETCH_PRODUCTS_REQUEST,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
 } from "./constants";
-import axios from "axios";
 
 function* fetchProductsSaga() {
   try {
