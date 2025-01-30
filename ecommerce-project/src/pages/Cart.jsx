@@ -38,35 +38,62 @@ export default function Cart() {
             <p className="empty-cart">Your cart is empty.</p>
           ) : (
             <>
-              <div className="cart-list">
-                {console.log(cart)}
-                {cart.map((item) => (
-                  <div className="cart-item-card" key={item.id}>
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="cart-item-image"
-                    />
-                    <div className="cart-item-details">
-                      <h3 className="cart-item-title">{item.title}</h3>
-                      <p className="cart-item-description">
-                        {item.description.slice(0, 60)}...
-                      </p>
-                      <p className="cart-item-price">Price: ${item.price}</p>
-                      <p className="cart-item-quantity">
-                        Quantity: {item.quantity}
-                      </p>
-                      <div className="cart-item-actions">
-                        <button onClick={() => handleAdd(item)}>+</button>
-                        <button onClick={() => handleRemove(item.id)}>-</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <table className="cart-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.map((item) => (
+                    <tr key={item.id}>
+                      <td>
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="cart-item-image"
+                        />
+                      </td>
+                      <td>{item.title}</td>
+                      <td>₹{item.price}</td>
+                      <td>{item.quantity}</td>
+                      <td>
+                        <button
+                          onClick={() => handleAdd(item)}
+                          className="btn-add"
+                        >
+                          +
+                        </button>
+                        <button
+                          onClick={() => handleRemove(item.id)}
+                          className="btn-remove"
+                        >
+                          -
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
               <div className="cart-summary">
-                <h2>Cart Summary</h2>
-                <p>Subtotal: ${calculateSubtotal()}</p>
+                <h2>Order Summary</h2>
+                <div className="summary-item">
+                  <span>Subtotal:</span>
+                  <span>₹{calculateSubtotal()}</span>
+                </div>
+                <div className="summary-item">
+                  <span>Shipping:</span>
+                  <span className="free">Free</span>
+                </div>
+                <div className="summary-total">
+                  <span>Total:</span>
+                  <span>₹{calculateSubtotal()}</span>
+                </div>
+                <button className="checkout-btn">Proceed to Checkout</button>
               </div>
             </>
           )}

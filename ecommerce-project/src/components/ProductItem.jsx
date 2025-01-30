@@ -20,7 +20,7 @@ const ProductItem = ({ product }) => {
       <img src={product.image} alt={product.title} className="product-image" />
       <div className="product-details">
         <h3 className="product-title">{product.title}</h3>
-        <p className="product-price">${product.price.toFixed(2)}</p>
+        <p className="product-price">₹{product.price.toFixed(2)}</p>
         <p className="product-rating">Rating: ⭐ {product.rating.rate}</p>
         <button className="add-to-cart-button" onClick={handleAddToCart}>
           Add to Cart

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/AddUserForm.css";
 import { addUser } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function RegistrationForm() {
   const [name, setName] = useState("");
@@ -10,6 +11,7 @@ export default function RegistrationForm() {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const authError = useSelector((state) => state.authError);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ export default function RegistrationForm() {
     setName("");
     setPassword("");
     setConfirmPassword("");
+    navigate("/login");
   };
 
   return (

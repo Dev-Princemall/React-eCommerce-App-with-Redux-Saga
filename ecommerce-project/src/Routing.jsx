@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Products from "./pages/Products";
 import Cart from "./pages/cart";
 import LoginSignUp from "./pages/LoginSignUp";
+import Footer from "./components/footer";
 export default function Routing() {
   return (
     <Router>
@@ -13,8 +14,10 @@ export default function Routing() {
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/user" element={<Cart />} />
-        <Route path="/signup" element={<LoginSignUp />} />
+        <Route path="/signup" element={<LoginSignUp login={false} />} />
+        <Route path="/login" element={<LoginSignUp login={true} />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

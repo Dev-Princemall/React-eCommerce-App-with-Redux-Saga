@@ -1,11 +1,12 @@
 .login-signup {
   font-family: Arial, sans-serif;
+  min-height: calc(65.5vh - 58.67px);
 }
 
 .main-container {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .info-container {

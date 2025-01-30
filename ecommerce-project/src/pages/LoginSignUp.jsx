@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RegistrationForm from "../components/RegistrationForm";
 import LoginForm from "../components/LoginForm";
 import "../styles/LoginSignUp.css";
@@ -11,7 +11,7 @@ export default function LoginSignUp() {
       <div className="main-container">
         <div className="info-container">
           <img
-            src="/placeholder.svg?height=400&width=600"
+            src="/banner.jpg"
             alt="Ecommerce Cart with person"
             className="info-image"
           />

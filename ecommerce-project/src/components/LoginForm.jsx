@@ -3,17 +3,20 @@ import "../styles/AddUserForm.css";
 import { loginUser } from "../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const authError = useSelector((state) => state.authError);
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(name, password));
     setName("");
     setPassword("");
+    navigate("/products");
   };
 
   return (

@@ -37,6 +37,19 @@
   color: #ff6b6b;
 }
 
+.navbar-links li a,
+.icons li a {
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.navbar-links li a.active,
+.icons li a.active {
+  color: #ff6b6b;
+  font-weight: bold;
+  border-bottom: 2px solid #ff6b6b;
+}
+
 .icons {
   list-style: none;
   display: flex;
@@ -106,4 +119,19 @@
   font-size: 16px;
   color: inherit;
   cursor: pointer;
+}
+
+.cart-link {
+  position: relative;
+}
+.cart-count {
+  position: absolute;
+  top: -14px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 2px 4px;
+  border-radius: 50%;
 }
