@@ -1,0 +1,63 @@
+/* About Us Page Styles */
+.about-container {
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  color: #333;
+}
+
+.about-banner {
+  background: #ff6600;
+  color: white;
+  padding: 50px 20px;
+}
+
+.about-banner h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px;
+  background: #f8f8f8;
+}
+
+.about-section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  margin: 20px;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #ff6600;
+}
+
+.about-section p {
+  font-size: 16px;
+  color: #555;
+}
+
+.about-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-section ul li {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+}
+
+.about-footer {
+  padding: 30px;
+  background: #333;
+  color: white;
+}

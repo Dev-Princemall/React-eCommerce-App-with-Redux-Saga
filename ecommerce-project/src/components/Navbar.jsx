@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { FaUser, FaSignOutAlt, FaCog, FaShoppingCart } from "react-icons/fa";
+import {
+  FaUser,
+  FaSignOutAlt,
+  FaCog,
+  FaShoppingCart,
+  FaSearch,
+} from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../Redux/actions";
+import { selectCartCount, selectLoggedUsers } from "../redux/selectors";
 import "../styles/navbar.css";
 
 export default function Navbar() {
   const location = useLocation();
-  const logged_user = useSelector((state) => state.logged_user);
-  const cartCount = useSelector((state) =>
-    logged_user ? state.carts[logged_user.id]?.cartItems.length || 0 : 0
-  );
+  const logged_user = useSelector(selectLoggedUsers);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const cartCount = useSelector(selectCartCount);
   const dispatch = useDispatch();
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
@@ -25,7 +31,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="/">Ecommerce</a>
+        <Link to="/">Ecommerce</Link>
       </div>
       <ul className="navbar-links">
         {/* <li>
@@ -59,6 +65,22 @@ export default function Navbar() {
         </li>
       </ul>
       <ul className="icons">
+        <li>
+          <div
+            className={`search-container ${isSearchVisible ? "active" : ""}`}
+          >
+            <FaSearch
+              size={25}
+              className="search-icon"
+              onClick={() => setIsSearchVisible(!isSearchVisible)}
+            />
+            <input
+              type="search"
+              placeholder="Search..."
+              className="search-input"
+            />
+          </div>
+        </li>
         <li className="cart-link">
           <Link
             to="/cart"

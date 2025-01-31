@@ -73,6 +73,48 @@
   color: #ff6b6b;
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 200px;
+  padding: 2px 10px;
+  transition: width 0.4s ease-in-out;
+  width: 12px;
+  overflow: hidden;
+  background-color: white;
+  cursor: pointer;
+}
+
+.search-container .search-icon {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.search-container input {
+  width: 0;
+  border: none;
+  outline: none;
+  padding: 0;
+  opacity: 0;
+  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out,
+    padding 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+/* When active, expand the search bar */
+.search-container.active {
+  width: 200px;
+}
+
+.search-container.active input {
+  width: 100%;
+  opacity: 1;
+  padding: 5px 10px;
+}
+.cart-icon {
+  margin-top: 5px;
+}
 .user-icon {
   position: relative;
 }

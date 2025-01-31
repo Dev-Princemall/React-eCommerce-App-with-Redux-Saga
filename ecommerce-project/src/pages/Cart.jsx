@@ -2,15 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../Redux/actions";
 import "../styles/cart.css";
+import { selectLoggedUsers, selectLoggedUsersCart } from "../redux/selectors";
 
 export default function Cart() {
-  const logged_user = useSelector((state) => state.logged_user);
-  const cart = useSelector((state) => {
-    if (logged_user) {
-      return state.carts[logged_user.id]?.cartItems || [];
-    }
-    return [];
-  });
+  const logged_user = useSelector(selectLoggedUsers);
+  const cart = useSelector(selectLoggedUsersCart);
 
   const dispatch = useDispatch();
 

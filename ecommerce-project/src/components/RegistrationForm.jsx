@@ -3,6 +3,7 @@ import "../styles/AddUserForm.css";
 import { addUser } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { selectAuthError } from "../redux/selectors";
 
 export default function RegistrationForm() {
   const [name, setName] = useState("");
@@ -10,7 +11,7 @@ export default function RegistrationForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const authError = useSelector((state) => state.authError);
+  const authError = useSelector(selectAuthError);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {

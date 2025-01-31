@@ -1,4 +1,4 @@
-/* Loading and Error Styles */
+/* Loading and Error Styles  */
 .loading {
   display: flex;
   justify-content: center;
@@ -39,7 +39,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.filter-container {
+/* .filter-container {
   display: flex;
   justify-content: end;
   gap: 20px;
@@ -51,4 +51,67 @@ button {
   font-size: large;
   font-weight: 500;
   border-radius: 8px;
+}  */
+
+/* Prevent styles from affecting child components */
+.products-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+  min-height: calc(100vh - 58.67px - 97.33px);
+}
+
+.filter-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.filter-dropdown {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+}
+
+.reset-button {
+  background-color: #ff6600;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.reset-button:hover {
+  background-color: #e65c00;
+}
+
+/* Loading & Error Messages */
+.loading-text,
+.error-text {
+  font-size: 18px;
+  color: #777;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filter-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filter-dropdown {
+    width: 100%;
+  }
 }
