@@ -70,7 +70,7 @@ export default function Navbar() {
             className={`search-container ${isSearchVisible ? "active" : ""}`}
           >
             <FaSearch
-              size={25}
+              size={24}
               className="search-icon"
               onClick={() => setIsSearchVisible(!isSearchVisible)}
             />
