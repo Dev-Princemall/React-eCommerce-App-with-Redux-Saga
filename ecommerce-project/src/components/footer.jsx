@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-links">
-        <Link to="/" className="footer-link">
+        {/* <Link to="/" className="footer-link">
           Home
         </Link>
         <Link to="/cart" className="footer-link">
@@ -14,7 +14,7 @@ const Footer = () => {
         </Link>
         <Link to="/about" className="footer-link">
           About Us
-        </Link>
+        </Link> */}
       </div>
 
       <div className="footer-text">

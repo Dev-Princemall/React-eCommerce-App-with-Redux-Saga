@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import "../styles/ProductDetails.css";
-import { selectProducts } from "../redux/selectors";
+import { addToCart } from "../Redux/actions";
+import { selectProducts, selectLoggedUsers } from "../redux/selectors";
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
   const { productId } = useParams();
   const products = useSelector(selectProducts);
   const [product, setProduct] = useState(null);
+  const user = useSelector(selectLoggedUsers);
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    if (user) {
+      dispatch(addToCart(product, user.id));
+    } else {
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     const foundProduct = products.find(
@@ -41,7 +52,7 @@ const ProductDetails = () => {
               </p>
             )}
             <p className="product-details-price">
-              <strong>Price:</strong> ₹{(product.price * 10).toFixed(2)}
+              <strong>Price:</strong> ₹{product.price.toFixed(2)}
             </p>
             <p className="product-details-category">
               <strong>Category:</strong> {product.category}
@@ -50,6 +61,7 @@ const ProductDetails = () => {
               <strong>Rating:</strong> ⭐ {product.rating.rate} (
               {product.rating.count})
             </p>
+            <button onClick={handleAddToCart}>Add To Cart 🛒</button>
           </div>
         </div>
       </div>

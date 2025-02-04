@@ -8,5 +8,15 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOG_OUT_USER";
 
+export const ERROR_STATE = "ERROR_STATE";
+export const SUCCESS_STATE = "SUCCESS_STATE";
+
+export const CLEAR_ERROR_SUCCESS_STATE = "CLEAR_ERROR_SUCCESS_STATE";
+
 export const ADD_USER = "ADD_USER";
 export const GET_USER = "GET_USER";
+
+export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
+export const SET_SORT_BY = "SET_SORT_BY";
+
+// export const RESET_STORE = "RESET_STORE";

@@ -20,10 +20,17 @@
   color: #ff6b6b;
 }
 
+.navbar-logo img {
+  width: 40px;
+}
+
 .navbar-links {
   list-style: none;
+  /* margin-left: 80px; */
   display: flex;
   gap: 20px;
+  justify-content: end;
+  width: 500px;
 }
 
 .navbar-links li a {
@@ -34,7 +41,7 @@
 }
 
 .navbar-links li a:hover {
-  color: #ff6b6b;
+  color: #ffae00;
 }
 
 .navbar-links li a,
@@ -45,14 +52,16 @@
 
 .navbar-links li a.active,
 .icons li a.active {
-  color: #ff6b6b;
+  color: #ffae00;
   font-weight: bold;
-  border-bottom: 2px solid #ff6b6b;
+  border-bottom: 2px solid #ffae00;
 }
 
 .icons {
   list-style: none;
   display: flex;
+  width: 337.38px;
+  justify-content: end;
   align-items: center;
   gap: 20px;
 }
@@ -70,10 +79,11 @@
 
 .icons li a:hover,
 .icons li button:hover {
-  color: #ff6b6b;
+  color: #ffae00;
 }
 
 .search-container {
+  position: relative;
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
@@ -83,7 +93,7 @@
   padding-left: 5px;
   transition: width 0.4s ease-in-out;
   width: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: white;
   cursor: pointer;
 }
@@ -115,6 +125,65 @@
   opacity: 1;
   padding: 3px 10px;
 }
+
+.search-results {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  width: 100%;
+  background-color: rgb(210, 203, 203);
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 300px; /* Limit height and add scroll */
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #181717;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+.result-product-image {
+  width: 40px;
+  height: 40px;
+  object-fit: fill;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-name {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #181717;
+}
+
+.product-description {
+  font-size: 12px;
+  color: #777;
+}
+
+.no-results {
+  padding: 10px;
+  color: #777;
+  text-align: center;
+}
+
 .cart-icon {
   margin-top: 5px;
 }

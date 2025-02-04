@@ -8,6 +8,7 @@ import ContactUs from "./pages/ContactUs";
 import ProductDetails from "./pages/ProductDetail";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/footer";
+
 export default function Routing() {
   return (
     <Router>
@@ -22,6 +23,7 @@ export default function Routing() {
         <Route path="/user" element={<Cart />} />
         <Route path="/signup" element={<LoginSignUp login={false} />} />
         <Route path="/login" element={<LoginSignUp login={true} />} />
+        <Route path="/logout" />
       </Routes>
       <Footer />
     </Router>

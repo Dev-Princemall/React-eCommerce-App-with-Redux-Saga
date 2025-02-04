@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { addToCart } from "../Redux/actions";
 import "../styles/productItem.css";
 import { selectLoggedUsers } from "../redux/selectors";
 
 const ProductItem = ({ product }) => {
   const user = useSelector(selectLoggedUsers);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     if (user) {
@@ -26,12 +27,24 @@ const ProductItem = ({ product }) => {
         />
       </Link>
       <div className="product-details">
-        <h3 className="product-title">{product.title}</h3>
-        <p className="product-price">₹{(product.price * 15).toFixed(2)}</p>
-        <p className="product-rating">Rating: ⭐ {product.rating.rate}</p>
-        <button className="add-to-cart-button" onClick={handleAddToCart}>
-          Add to Cart
-        </button>
+        <div className="product-title">
+          <p>{product.title}</p>
+        </div>
+        <div className="product-price-rating">
+          <p className="product-price">₹{product.price.toFixed(2)}</p>
+          <p className="product-rating">Rating: ⭐ {product.rating.rate}</p>
+        </div>
+        <div className="product-action-buttons">
+          <button className="add-to-cart-button" onClick={handleAddToCart}>
+            Add to Cart
+          </button>
+          <button
+            className="add-to-cart-button"
+            onClick={() => navigate(`/products/${product.id}`)}
+          >
+            View Detail
+          </button>
+        </div>
       </div>
     </div>
   );

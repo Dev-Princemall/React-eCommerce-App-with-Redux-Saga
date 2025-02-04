@@ -7,6 +7,11 @@ import {
   ADD_USER,
   LOGIN_USER,
   LOGOUT_USER,
+  SET_CATEGORY_FILTER,
+  SET_SORT_BY,
+  ERROR_STATE,
+  SUCCESS_STATE,
+  CLEAR_ERROR_SUCCESS_STATE,
 } from "./constants";
 
 const initialState = {
@@ -16,7 +21,12 @@ const initialState = {
   logged_user: null,
   loading: false,
   error: null,
+  success: null,
   authError: null,
+  filters: {
+    category: "",
+    sortBy: "",
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +39,24 @@ const reducer = (state = initialState, action) => {
 
     case FETCH_PRODUCTS_FAILURE:
       return { ...state, loading: false, error: action.payload };
+
+    case SET_CATEGORY_FILTER:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          category: action.payload,
+        },
+      };
+
+    case SET_SORT_BY:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          sortBy: action.payload,
+        },
+      };
 
     case ADD_USER:
       if (state.users.some((user) => user.name === action.payload.name)) {
@@ -114,7 +142,16 @@ const reducer = (state = initialState, action) => {
     }
 
     case LOGOUT_USER:
-      return { ...state, logged_user: null, authError: null };
+      return { ...state, logged_user: null, authError: null, filters: {} };
+
+    case ERROR_STATE:
+      return;
+
+    case SUCCESS_STATE:
+      return;
+
+    case CLEAR_ERROR_SUCCESS_STATE:
+      return;
 
     default:
       return state;

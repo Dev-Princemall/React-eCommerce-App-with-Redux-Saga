@@ -22,3 +22,25 @@ export const selectCartCount = (state) => {
   const logged_user = selectLoggedUsers(state);
   return logged_user ? state.carts[logged_user.id]?.cartItems.length || 0 : 0;
 };
+
+export const selectCategoryFilter = (state) => state.filters.category;
+export const selectSortBy = (state) => state.filters.sortBy;
+export const selectFilteredAndSortedProducts = (state) => {
+  const products = selectProducts(state);
+  const category = selectCategoryFilter(state);
+  const sortBy = selectSortBy(state);
+
+  const filteredProducts = products.filter((product) =>
+    category ? product.category === category : true
+  );
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortBy === "priceLowToHigh") return a.price - b.price;
+    if (sortBy === "priceHighToLow") return b.price - a.price;
+    if (sortBy === "nameAsc") return a.title.localeCompare(b.title);
+    if (sortBy === "nameDesc") return b.title.localeCompare(a.title);
+    return 0;
+  });
+
+  return sortedProducts;
+};

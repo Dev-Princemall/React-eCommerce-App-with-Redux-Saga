@@ -7,6 +7,11 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   ADD_USER,
+  SET_CATEGORY_FILTER,
+  SET_SORT_BY,
+  ERROR_STATE,
+  SUCCESS_STATE,
+  CLEAR_ERROR_SUCCESS_STATE,
 } from "./constants";
 
 export const fetchProductsRequest = () => ({ type: FETCH_PRODUCTS_REQUEST });
@@ -41,4 +46,28 @@ export const loginUser = (name, password) => ({
 
 export const logoutUser = () => ({
   type: LOGOUT_USER,
+});
+
+export const setCategoryFilter = (category) => ({
+  type: SET_CATEGORY_FILTER,
+  payload: category,
+});
+
+export const setSortBy = (sortBy) => ({
+  type: SET_SORT_BY,
+  payload: sortBy,
+});
+
+export const errorState = (error) => ({
+  type: ERROR_STATE,
+  payload: error,
+});
+
+export const successState = (success) => ({
+  type: SUCCESS_STATE,
+  payload: error,
+});
+
+export const clearErrorSuccessState = () => ({
+  type: CLEAR_ERROR_SUCCESS_STATE,
 });

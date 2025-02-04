@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FaUser,
   FaSignOutAlt,
@@ -9,7 +9,11 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../Redux/actions";
-import { selectCartCount, selectLoggedUsers } from "../redux/selectors";
+import {
+  selectCartCount,
+  selectLoggedUsers,
+  selectProducts,
+} from "../redux/selectors";
 import "../styles/navbar.css";
 
 export default function Navbar() {
@@ -20,25 +24,46 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
-
+  const products = useSelector(selectProducts);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const searchRef = useRef(null);
   const handleMouseEnter = () => setDropdownVisible(true);
   const handleMouseLeave = () => setDropdownVisible(false);
   const handleLogout = () => {
     dispatch(logoutUser());
     navigate("/login");
   };
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    setSearchResults(
+      query
+        ? products.filter((product) =>
+            product.title.toLowerCase().includes(query.toLowerCase())
+          )
+        : []
+    );
+  };
 
+  const handkeClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setIsSearchVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handkeClickOutside);
+    return () => document.removeEventListener("mousedown", handkeClickOutside);
+  }, []);
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/">Ecommerce</Link>
+        <Link to="/">
+          <img src="./ecommerce.png" alt="logo" />
+        </Link>
       </div>
       <ul className="navbar-links">
-        {/* <li>
-          <Link to="/" className={location.pathname === "/" ? "active" : ""}>
-            Home
-          </Link>
-        </li> */}
         <li>
           <Link
             to="/about"
@@ -67,6 +92,7 @@ export default function Navbar() {
       <ul className="icons">
         <li>
           <div
+            ref={searchRef}
             className={`search-container ${isSearchVisible ? "active" : ""}`}
           >
             <FaSearch
@@ -78,7 +104,39 @@ export default function Navbar() {
               type="search"
               placeholder="Search..."
               className="search-input"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onFocus={() => setIsSearchVisible(true)}
             />
+            {searchQuery && isSearchVisible && (
+              <div className="search-results">
+                {searchResults.length > 0 ? (
+                  searchResults.map((product) => (
+                    <Link
+                      to={`/products/${product.id}`}
+                      key={product.id}
+                      className="search-result-item"
+                    >
+                      {product.image && (
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          className="result-product-image"
+                        />
+                      )}
+                      <div className="product-details">
+                        <div className="product-name">{product.title}</div>
+                        {/* <div className="product-description">
+                          {product.description}
+                        </div> */}
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="no-results">No results found</div>
+                )}
+              </div>
+            )}
           </div>
         </li>
         <li className="cart-link">

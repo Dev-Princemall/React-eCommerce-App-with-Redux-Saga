@@ -1,39 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductsRequest } from "../Redux/actions";
+import {
+  fetchProductsRequest,
+  setCategoryFilter,
+  setSortBy,
+} from "../Redux/actions";
 import ProductList from "../Components/ProductList";
-import { selectProducts, selectLoading, selectError } from "../redux/selectors";
+import {
+  selectFilteredAndSortedProducts,
+  selectLoading,
+  selectError,
+  selectCategoryFilter,
+  selectSortBy,
+} from "../redux/selectors";
 import "../styles/Products.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Products() {
   const dispatch = useDispatch();
-  const products = useSelector(selectProducts);
+  const products = useSelector(selectFilteredAndSortedProducts);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
-  const [category, setCategory] = useState("");
-  const [sortBy, setSortBy] = useState("");
+  const categoryFilter = useSelector(selectCategoryFilter);
+  const sortByFilter = useSelector(selectSortBy);
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    dispatch(setSortBy(params.get("sortBy") || ""));
+    dispatch(setCategoryFilter(params.get("category") || ""));
+  }, [location.search]);
 
   useEffect(() => {
     dispatch(fetchProductsRequest());
-  }, [dispatch]);
+  }, []);
 
   const resetFilters = () => {
-    setCategory("");
-    setSortBy("");
+    dispatch(setCategoryFilter(""));
+    dispatch(setSortBy(""));
+    navigate({ search: "" });
+  };
+  const handleCategoryFilterChange = (event) => {
+    dispatch(setCategoryFilter(event.target.value));
+    updateUrlParams(sortByFilter, event.target.value);
+  };
+  const handleSortByFilterChange = (event) => {
+    dispatch(setSortBy(event.target.value));
+    updateUrlParams(event.target.value, categoryFilter);
   };
 
-  const filteredProducts = products.filter((product) =>
-    category ? product.category === category : true
-  );
-
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === "priceLowToHigh") return a.price - b.price;
-    if (sortBy === "priceHighToLow") return b.price - a.price;
-    if (sortBy === "nameAsc") return a.title.localeCompare(b.title);
-    if (sortBy === "nameDesc") return b.title.localeCompare(a.title);
-    return 0;
-  });
-
+  const updateUrlParams = (filter, category) => {
+    const params = new URLSearchParams();
+    if (filter) params.set("sortBy", filter);
+    if (category) params.set("category", category);
+    navigate({ search: params.toString() });
+  };
   return (
     <div className="products-container">
       {error && <p className="error">Error: {error}</p>}
@@ -43,22 +64,26 @@ export default function Products() {
         <>
           <div className="filter-section">
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={categoryFilter}
+              onChange={handleCategoryFilterChange}
               className="filter-dropdown"
             >
-              <option value="">Select Category</option>
+              <option value="" disabled hidden>
+                Select Category
+              </option>
               <option value="electronics">Electronics</option>
               <option value="men's clothing">Men's Clothing</option>
               <option value="women's clothing">Women's Clothing</option>
               <option value="jewelery">Jewelery</option>
             </select>
             <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              value={sortByFilter}
+              onChange={handleSortByFilterChange}
               className="filter-dropdown"
             >
-              <option value="">Sort By</option>
+              <option value="" disabled hidden>
+                Sort By
+              </option>
               <option value="priceLowToHigh">Price: Low to High</option>
               <option value="priceHighToLow">Price: High to Low</option>
               <option value="nameAsc">Name: A to Z</option>
@@ -68,7 +93,7 @@ export default function Products() {
               Reset
             </button>
           </div>
-          <ProductList products={sortedProducts} />
+          <ProductList products={products} />
         </>
       )}
     </div>

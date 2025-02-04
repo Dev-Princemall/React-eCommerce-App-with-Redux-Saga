@@ -70,7 +70,7 @@ button {
   justify-content: center;
   align-items: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .filter-dropdown {
@@ -80,6 +80,11 @@ button {
   border-radius: 5px;
   background: white;
   cursor: pointer;
+  background-color: rgb(179, 179, 179);
+}
+.filter-dropdown option {
+  background-color: rgb(179, 179, 179);
+  color: var(--filter-option-color);
 }
 
 .reset-button {
