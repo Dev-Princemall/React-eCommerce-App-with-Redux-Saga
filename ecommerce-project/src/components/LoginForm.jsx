@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "../styles/AddUserForm.css";
 import { loginUser } from "../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectAuthError } from "../redux/selectors";
+import "../styles/AddUserForm.css";
 
 export default function LoginForm() {
   const [name, setName] = useState("");
@@ -22,7 +22,6 @@ export default function LoginForm() {
 
   return (
     <form className="user-form" onSubmit={handleSubmit}>
-      <h2>Login</h2>
       {authError && <p style={{ color: "red" }}>{authError}</p>}
       <label>Username:</label>
       <input

@@ -23,9 +23,10 @@ export default function LoginSignUp() {
             <div className="header-container">
               <h2 className="welcome-text">Welcome to</h2>
               <img
-                src="/static/images/logo.png"
+                src="./ecommerce.png"
                 alt="logo"
                 className="logo-image"
+                style={{ objectFit: "contain", width: "100px", height: "50px" }}
               />
             </div>
             <div className="tab-container">

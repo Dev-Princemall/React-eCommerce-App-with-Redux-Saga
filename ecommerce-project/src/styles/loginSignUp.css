@@ -11,9 +11,10 @@
 
 .info-container {
   flex: 1;
-  background-color: #4a90e2;
+  background-color: var(--button-color);
   color: white;
   padding: 20px;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,6 +26,8 @@
   max-width: 400px;
   border-radius: 10px;
   margin-bottom: 20px;
+  backdrop-filter: blur("10px");
+  /* opacity: 0.6; */
 }
 
 .info-title {
@@ -35,6 +38,11 @@
 
 .info-text {
   font-size: 1.2rem;
+}
+
+.info-title, .info-text{
+  display: flex;
+  top: 0;
 }
 
 .form-container {
@@ -71,7 +79,7 @@
 }
 
 .tab-container {
-  margin-bottom: 20px;
+  margin-bottom: -30px;
 }
 
 .tab-navigation {
@@ -91,7 +99,7 @@
 }
 
 .tab-button.active {
-  background-color: #4a90e2;
+  background-color: var(--button-color);
   color: white;
   font-weight: bold;
 }

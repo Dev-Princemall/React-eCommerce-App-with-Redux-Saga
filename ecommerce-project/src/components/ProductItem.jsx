@@ -11,9 +11,9 @@ const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     if (user) {
-      dispatch(addToCart(product, user.id));
+      dispatch(addToCart(product));
     } else {
-      alert("Please log in to add items to the cart.");
+      navigate("/login");
     }
   };
 

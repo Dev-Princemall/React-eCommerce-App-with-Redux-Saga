@@ -61,40 +61,42 @@ export default function Products() {
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
-        <>
-          <div className="filter-section">
-            <select
-              value={categoryFilter}
-              onChange={handleCategoryFilterChange}
-              className="filter-dropdown"
-            >
-              <option value="" disabled hidden>
-                Select Category
-              </option>
-              <option value="electronics">Electronics</option>
-              <option value="men's clothing">Men's Clothing</option>
-              <option value="women's clothing">Women's Clothing</option>
-              <option value="jewelery">Jewelery</option>
-            </select>
-            <select
-              value={sortByFilter}
-              onChange={handleSortByFilterChange}
-              className="filter-dropdown"
-            >
-              <option value="" disabled hidden>
-                Sort By
-              </option>
-              <option value="priceLowToHigh">Price: Low to High</option>
-              <option value="priceHighToLow">Price: High to Low</option>
-              <option value="nameAsc">Name: A to Z</option>
-              <option value="nameDesc">Name: Z to A</option>
-            </select>
-            <button className="reset-button" onClick={resetFilters}>
-              Reset
-            </button>
-          </div>
-          <ProductList products={products} />
-        </>
+        !error && (
+          <>
+            <div className="filter-section">
+              <select
+                value={categoryFilter}
+                onChange={handleCategoryFilterChange}
+                className="filter-dropdown"
+              >
+                <option value="" disabled hidden>
+                  Select Category
+                </option>
+                <option value="electronics">Electronics</option>
+                <option value="men's clothing">Men's Clothing</option>
+                <option value="women's clothing">Women's Clothing</option>
+                <option value="jewelery">Jewelery</option>
+              </select>
+              <select
+                value={sortByFilter}
+                onChange={handleSortByFilterChange}
+                className="filter-dropdown"
+              >
+                <option value="" disabled hidden>
+                  Sort By
+                </option>
+                <option value="priceLowToHigh">Price: Low to High</option>
+                <option value="priceHighToLow">Price: High to Low</option>
+                <option value="nameAsc">Name: A to Z</option>
+                <option value="nameDesc">Name: Z to A</option>
+              </select>
+              <button className="reset-button" onClick={resetFilters}>
+                Reset
+              </button>
+            </div>
+            <ProductList products={products} />
+          </>
+        )
       )}
     </div>
   );

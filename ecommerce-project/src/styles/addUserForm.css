@@ -34,7 +34,7 @@
 }
 
 .user-form input:focus {
-  border-color: #007bff;
+  border-color: var(--button-color);
   outline: none;
 }
 
@@ -62,7 +62,7 @@
 .user-form button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: var(--button-color);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -72,5 +72,5 @@
 }
 
 .user-form button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-color-hover);
 }

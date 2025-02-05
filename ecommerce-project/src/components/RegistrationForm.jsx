@@ -37,8 +37,6 @@ export default function RegistrationForm() {
 
   return (
     <form className="user-form" onSubmit={handleSubmit}>
-      <h2>Sign Up</h2>
-      {error && <p className={"error-message"}>{error}</p>}
       {authError && <p style={{ color: "red" }}>{authError}</p>}
       <label>Username:</label>
       <input
@@ -67,6 +65,7 @@ export default function RegistrationForm() {
         placeholder="Confirm your password"
         required
       />
+      {error && <p className={"error-message"}>{error}</p>}
       <button type="submit">Sign Up</button>
     </form>
   );
