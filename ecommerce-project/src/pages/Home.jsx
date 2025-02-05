@@ -15,7 +15,6 @@ export default function Home() {
   const users = useSelector(selectUsers);
   const logged_user = useSelector(selectLoggedUsers);
   const products = useSelector(selectProducts);
-
   useEffect(() => {
     dispatch(fetchProductsRequest());
   }, [dispatch]);

@@ -9,9 +9,8 @@ import {
   ADD_USER,
   SET_CATEGORY_FILTER,
   SET_SORT_BY,
-  ERROR_STATE,
-  SUCCESS_STATE,
   CLEAR_ERROR_SUCCESS_STATE,
+  CLEAR_CART,
 } from "./constants";
 
 export const fetchProductsRequest = () => ({ type: FETCH_PRODUCTS_REQUEST });
@@ -58,16 +57,10 @@ export const setSortBy = (sortBy) => ({
   payload: sortBy,
 });
 
-export const errorState = (error) => ({
-  type: ERROR_STATE,
-  payload: error,
-});
-
-export const successState = (success) => ({
-  type: SUCCESS_STATE,
-  payload: error,
-});
-
 export const clearErrorSuccessState = () => ({
   type: CLEAR_ERROR_SUCCESS_STATE,
+});
+
+export const clearCart = () => ({
+  type: CLEAR_CART,
 });

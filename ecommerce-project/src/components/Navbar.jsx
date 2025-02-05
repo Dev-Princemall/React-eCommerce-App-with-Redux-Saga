@@ -15,47 +15,65 @@ import {
   selectProducts,
 } from "../redux/selectors";
 import "../styles/navbar.css";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const location = useLocation();
   const logged_user = useSelector(selectLoggedUsers);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const cartCount = useSelector(selectCartCount);
   const dispatch = useDispatch();
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
   const products = useSelector(selectProducts);
+
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+
   const searchRef = useRef(null);
+
   const handleMouseEnter = () => setDropdownVisible(true);
   const handleMouseLeave = () => setDropdownVisible(false);
+
   const handleLogout = () => {
+    setDropdownVisible(false);
     dispatch(logoutUser());
     navigate("/login");
-  };
-  const handleSearchChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    setSearchResults(
-      query
-        ? products.filter((product) =>
-            product.title.toLowerCase().includes(query.toLowerCase())
-          )
-        : []
-    );
+    toast.success("Logged Out Successfully.");
   };
 
-  const handkeClickOutside = (event) => {
+  // useEffect(() => {
+  //   if (!logged_user) {
+  //     navigate("/login");
+  //   }
+  // }, [logged_user, navigate]);
+
+  useEffect(() => {
+    const delaySearch = setTimeout(() => {
+      setSearchResults(
+        searchQuery
+          ? products.filter((product) =>
+              product.title.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+          : []
+      );
+    }, 300);
+
+    return () => clearTimeout(delaySearch);
+  }, [searchQuery, products]);
+
+  // ✅ Close search bar when clicking outside
+  const handleClickOutside = (event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setIsSearchVisible(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handkeClickOutside);
-    return () => document.removeEventListener("mousedown", handkeClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -105,7 +123,7 @@ export default function Navbar() {
               placeholder="Search..."
               className="search-input"
               value={searchQuery}
-              onChange={handleSearchChange}
+              onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchVisible(true)}
             />
             {searchQuery && isSearchVisible && (
@@ -126,9 +144,6 @@ export default function Navbar() {
                       )}
                       <div className="product-details">
                         <div className="product-name">{product.title}</div>
-                        {/* <div className="product-description">
-                          {product.description}
-                        </div> */}
                       </div>
                     </Link>
                   ))
@@ -176,12 +191,7 @@ export default function Navbar() {
           </li>
         ) : (
           <li>
-            <Link
-              to="/signup"
-              className={location.pathname === "/signup" ? "active" : ""}
-            >
-              SignUp
-            </Link>
+            <Link to="/signup">SignUp</Link>
           </li>
         )}
       </ul>

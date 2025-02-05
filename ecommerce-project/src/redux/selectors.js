@@ -5,6 +5,7 @@ export const selectLoading = (state) => state.loading;
 export const selectError = (state) => state.error;
 
 export const selectAuthError = (state) => state.authError;
+export const selectSuccess = (state) => state.success;
 
 export const selectUsers = (state) => state.users;
 

@@ -21,8 +21,8 @@ export default function Routing() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/user" element={<Cart />} />
-        <Route path="/signup" element={<LoginSignUp login={false} />} />
-        <Route path="/login" element={<LoginSignUp login={true} />} />
+        <Route path="/signup" element={<LoginSignUp islogin={false} />} />
+        <Route path="/login" element={<LoginSignUp islogin={true} />} />
         <Route path="/logout" />
       </Routes>
       <Footer />

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import "../styles/ProductDetails.css";
 import { addToCart } from "../Redux/actions";
-import { selectProducts, selectLoggedUsers } from "../redux/selectors";
+import {
+  selectProducts,
+  selectLoggedUsers,
+  selectLoggedUsersCart,
+} from "../redux/selectors";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -11,21 +16,30 @@ const ProductDetails = () => {
   const products = useSelector(selectProducts);
   const [product, setProduct] = useState(null);
   const user = useSelector(selectLoggedUsers);
+  const userCart = useSelector(selectLoggedUsersCart);
   const dispatch = useDispatch();
-  const handleAddToCart = () => {
-    if (user) {
-      dispatch(addToCart(product, user.id));
-    } else {
-      navigate("/login");
-    }
-  };
+
+  // Convert productId to a number for proper comparison
+  const numericProductId = parseInt(productId, 10);
+  const isAlreadyAdded = userCart.some((item) => item.id === numericProductId);
 
   useEffect(() => {
-    const foundProduct = products.find(
-      (item) => item.id === parseInt(productId)
-    );
+    const foundProduct = products.find((item) => item.id === numericProductId);
     setProduct(foundProduct);
-  }, [productId, products]);
+  }, [numericProductId, products]);
+
+  const handleAddToCart = () => {
+    if (!user) {
+      toast.error("Please Login to Add Item to Cart");
+      navigate("/login");
+      return;
+    }
+
+    if (product) {
+      dispatch(addToCart(product));
+      toast.success("Item Added to Cart Successfully");
+    }
+  };
 
   if (!product)
     return (
@@ -61,7 +75,17 @@ const ProductDetails = () => {
               <strong>Rating:</strong> ⭐ {product.rating.rate} (
               {product.rating.count})
             </p>
-            <button onClick={handleAddToCart}>Add To Cart 🛒</button>
+            <button
+              className={
+                isAlreadyAdded
+                  ? "add-to-cart-detailsPage-button-disabled"
+                  : "add-to-cart-detailsPage-button"
+              }
+              onClick={handleAddToCart}
+              disabled={isAlreadyAdded}
+            >
+              {isAlreadyAdded ? "Added to Cart" : "Add to Cart"}
+            </button>
           </div>
         </div>
       </div>

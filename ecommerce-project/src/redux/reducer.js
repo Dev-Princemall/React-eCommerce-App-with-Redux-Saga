@@ -9,9 +9,8 @@ import {
   LOGOUT_USER,
   SET_CATEGORY_FILTER,
   SET_SORT_BY,
-  ERROR_STATE,
-  SUCCESS_STATE,
   CLEAR_ERROR_SUCCESS_STATE,
+  CLEAR_CART,
 } from "./constants";
 
 const initialState = {
@@ -66,6 +65,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         users: [...state.users, action.payload],
         authError: null,
+        success: "User Registered Successfully",
       };
 
     case ADD_TO_CART: {
@@ -75,11 +75,10 @@ const reducer = (state = initialState, action) => {
 
       const userId = state.logged_user.id;
       const existingCart = state.carts[userId]?.cartItems || [];
-      const existingCartItem = existingCart.find(
-        (item) => item.id === action.payload.id
-      );
 
-      const updatedCartItems = existingCartItem
+      const updatedCartItems = existingCart.some(
+        (item) => item.id === action.payload.id
+      )
         ? existingCart.map((cartItem) =>
             cartItem.id === action.payload.id
               ? { ...cartItem, quantity: cartItem.quantity + 1 }
@@ -91,10 +90,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         carts: {
           ...state.carts,
-          [userId]: {
-            id: userId,
-            cartItems: updatedCartItems,
-          },
+          [userId]: { id: userId, cartItems: updatedCartItems },
         },
       };
     }
@@ -111,11 +107,11 @@ const reducer = (state = initialState, action) => {
         .map((item) =>
           item.id === action.payload
             ? item.quantity > 1
-              ? { ...item, quantity: item.quantity - 1 } // Reduce quantity
-              : null // Remove item if quantity is 1
+              ? { ...item, quantity: item.quantity - 1 }
+              : null
             : item
         )
-        .filter(Boolean); // Remove null items
+        .filter(Boolean);
 
       return {
         ...state,
@@ -136,7 +132,12 @@ const reducer = (state = initialState, action) => {
           u.password === action.payload.password
       );
       if (user) {
-        return { ...state, logged_user: user, authError: null };
+        return {
+          ...state,
+          logged_user: user,
+          authError: null,
+          success: "Login Successful",
+        };
       }
       return { ...state, authError: "Invalid credentials" };
     }
@@ -144,14 +145,11 @@ const reducer = (state = initialState, action) => {
     case LOGOUT_USER:
       return { ...state, logged_user: null, authError: null, filters: {} };
 
-    case ERROR_STATE:
-      return;
-
-    case SUCCESS_STATE:
-      return;
-
     case CLEAR_ERROR_SUCCESS_STATE:
-      return;
+      return { ...state, authError: null, success: null };
+
+    // case CLEAR_CART:
+    //   const userId = state.logged_user.id;
 
     default:
       return state;

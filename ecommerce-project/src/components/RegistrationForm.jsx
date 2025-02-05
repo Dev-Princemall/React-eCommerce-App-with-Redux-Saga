@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/AddUserForm.css";
-import { addUser } from "../Redux/actions";
+import { addUser, clearErrorSuccessState } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectAuthError } from "../redux/selectors";
+import { selectAuthError, selectSuccess } from "../redux/selectors";
+import { toast } from "react-toastify";
 
 export default function RegistrationForm() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
+  const successMessage = useSelector(selectSuccess);
   const dispatch = useDispatch();
   const authError = useSelector(selectAuthError);
   const navigate = useNavigate();
@@ -29,11 +31,21 @@ export default function RegistrationForm() {
       password: password,
     };
     dispatch(addUser(newUser));
-    setName("");
-    setPassword("");
-    setConfirmPassword("");
-    navigate("/login");
   };
+
+  useEffect(() => {
+    if (authError) {
+      toast.error(authError);
+      dispatch(clearErrorSuccessState());
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+      setName("");
+      setPassword("");
+      dispatch(clearErrorSuccessState());
+      navigate("/login");
+    }
+  }, [authError, successMessage]);
 
   return (
     <form className="user-form" onSubmit={handleSubmit}>

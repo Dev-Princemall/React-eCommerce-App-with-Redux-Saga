@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { loginUser } from "../Redux/actions";
+import React, { useEffect, useState } from "react";
+import { clearErrorSuccessState, loginUser } from "../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectAuthError } from "../redux/selectors";
+import { selectAuthError, selectSuccess } from "../redux/selectors";
+import { toast } from "react-toastify";
 import "../styles/AddUserForm.css";
 
 export default function LoginForm() {
@@ -11,14 +12,26 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const authError = useSelector(selectAuthError);
+  const successMessage = useSelector(selectSuccess);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(name, password));
-    setName("");
-    setPassword("");
-    navigate("/products");
   };
+
+  useEffect(() => {
+    if (authError) {
+      toast.error(authError);
+      dispatch(clearErrorSuccessState());
+    }
+    if (successMessage) {
+      toast.success("Login Successful.");
+      setName("");
+      setPassword("");
+      dispatch(clearErrorSuccessState());
+      navigate("/products");
+    }
+  }, [authError, successMessage, navigate, handleSubmit]);
 
   return (
     <form className="user-form" onSubmit={handleSubmit}>

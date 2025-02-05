@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom"; // ✅ Import useLocation
 import RegistrationForm from "../components/RegistrationForm";
 import LoginForm from "../components/LoginForm";
 import "../styles/LoginSignUp.css";
 
 export default function LoginSignUp() {
+  const location = useLocation();
   const [isLogin, setIsLogin] = useState(true);
+
+  useEffect(() => {
+    setIsLogin(location.pathname === "/login");
+  }, [location.pathname]);
 
   return (
     <div className="login-signup">
