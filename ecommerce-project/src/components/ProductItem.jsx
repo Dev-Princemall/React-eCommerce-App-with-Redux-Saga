@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCart } from "../Redux/actions";
 import { toast } from "react-toastify";
-import "../styles/productItem.css";
+import StarDistribution from "./StarDistribution";
 import { selectLoggedUsers, selectLoggedUsersCart } from "../redux/selectors";
+import "../styles/productItem.css";
 
 const ProductItem = ({ product }) => {
+  const [showDistribution, setShowDistribution] = useState(false);
   const user = useSelector(selectLoggedUsers);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,7 +42,21 @@ const ProductItem = ({ product }) => {
         </div>
         <div className="product-price-rating">
           <p className="product-price">₹{product.price.toFixed(2)}</p>
-          <p className="product-rating">Rating: ⭐ {product.rating.rate}</p>
+          <div
+            className="rating-container"
+            onMouseEnter={() => setShowDistribution(true)}
+            onMouseLeave={() => setShowDistribution(false)}
+          >
+            <p className="product-rating">⭐ {product.rating.rate}</p>
+            {showDistribution && (
+              <div className="rating-distribution-container">
+                <StarDistribution
+                  rate={product.rating.rate}
+                  count={product.rating.count}
+                />
+              </div>
+            )}
+          </div>
         </div>
         <div className="product-action-buttons">
           <button

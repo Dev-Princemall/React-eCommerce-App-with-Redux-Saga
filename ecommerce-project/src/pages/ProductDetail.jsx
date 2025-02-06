@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import "../styles/ProductDetails.css";
 import { addToCart } from "../Redux/actions";
 import {
   selectProducts,
   selectLoggedUsers,
   selectLoggedUsersCart,
 } from "../redux/selectors";
+import "../styles/ProductDetails.css";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
