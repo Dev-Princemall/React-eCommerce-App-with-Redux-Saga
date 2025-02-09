@@ -15,5 +15,11 @@ export const ADD_USER = "ADD_USER";
 export const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 export const SET_SORT_BY = "SET_SORT_BY";
 
+export const ADD_DELIVERY_INFO = "ADD_DELIVERY_INFO";
+export const EDIT_DELIVERY_INFO = "EDIT_DELIVERY_INFO";
+
+export const SAVE_PAYMENT_INFO = "SAVE_PAYMENT_INFO";
+
+
 export const CLEAR_CART = "CLEAR_CART";
 // export const RESET_STORE = "RESET_STORE";

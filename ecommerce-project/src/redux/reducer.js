@@ -11,6 +11,9 @@ import {
   SET_SORT_BY,
   CLEAR_ERROR_SUCCESS_STATE,
   CLEAR_CART,
+  ADD_DELIVERY_INFO,
+  EDIT_DELIVERY_INFO,
+  SAVE_PAYMENT_INFO,
 } from "./constants";
 
 const initialState = {
@@ -26,6 +29,8 @@ const initialState = {
     category: "",
     sortBy: "",
   },
+  deliveryInfo: {}, // Stores delivery info by userId
+  payment_info: null, // Store user's selected payment details
 };
 
 const reducer = (state = initialState, action) => {
@@ -145,11 +150,63 @@ const reducer = (state = initialState, action) => {
     case LOGOUT_USER:
       return { ...state, logged_user: null, authError: null, filters: {} };
 
+    case ADD_DELIVERY_INFO:
+      if (!state.logged_user) {
+        console.error("No logged-in user found.");
+        return state; // Prevent errors if no user is logged in
+      }
+
+      const userId = state.logged_user.id;
+      console.log("Updating delivery info in Redux:", action.payload);
+
+      return {
+        ...state,
+        deliveryInfo: {
+          ...state.deliveryInfo,
+          [userId]: { ...action.payload }, // Ensure a new reference
+        },
+      };
+
+    case EDIT_DELIVERY_INFO: {
+      if (!state.logged_user) return state; // Ensure user is logged in
+
+      const userId = state.logged_user.id;
+
+      return {
+        ...state,
+        deliveryInfo: {
+          ...state.deliveryInfo,
+          [userId]: {
+            ...state.deliveryInfo[userId], // Keep existing data
+            ...action.payload, // Update only the changed fields
+          },
+        },
+      };
+    }
+
+    case SAVE_PAYMENT_INFO:
+      return { ...state, payment_info: action.payload };
+
     case CLEAR_ERROR_SUCCESS_STATE:
       return { ...state, authError: null, success: null };
 
-    // case CLEAR_CART:
-    //   const userId = state.logged_user.id;
+    case CLEAR_CART:
+      if (!state.logged_user) return state;
+      const uid = state.logged_user.id;
+
+      console.log("Before CLEAR_CART:", state.carts[uid]);
+
+      const newState = {
+        ...state,
+        carts: {
+          ...state.carts,
+          [uid]: { id: uid, cartItems: [] },
+        },
+      };
+
+      console.log("After CLEAR_CART:", newState.carts[uid]);
+
+      return newState;
 
     default:
       return state;

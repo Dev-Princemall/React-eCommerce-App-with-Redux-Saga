@@ -45,3 +45,14 @@ export const selectFilteredAndSortedProducts = (state) => {
 
   return sortedProducts;
 };
+
+export const selectLoggedUserDeliveryInfo = (state) => {
+  const logged_user = selectLoggedUsers(state);
+  return logged_user && state.deliveryInfo
+    ? state.deliveryInfo[logged_user.id] || null
+    : null;
+};
+export const selectLoggedUserPaymentInfo = (state) => {
+  const logged_user = selectLoggedUsers(state);
+  return (logged_user && state.payment_info) || null;
+};

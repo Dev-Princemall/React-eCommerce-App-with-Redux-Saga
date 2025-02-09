@@ -11,6 +11,9 @@ import {
   SET_SORT_BY,
   CLEAR_ERROR_SUCCESS_STATE,
   CLEAR_CART,
+  ADD_DELIVERY_INFO,
+  EDIT_DELIVERY_INFO,
+  SAVE_PAYMENT_INFO,
 } from "./constants";
 
 export const fetchProductsRequest = () => ({ type: FETCH_PRODUCTS_REQUEST });
@@ -59,6 +62,20 @@ export const setSortBy = (sortBy) => ({
 
 export const clearErrorSuccessState = () => ({
   type: CLEAR_ERROR_SUCCESS_STATE,
+});
+
+export const addDeliveryInfo = (deliveryInfo) => ({
+  type: ADD_DELIVERY_INFO,
+  payload: deliveryInfo,
+});
+export const editDeliveryInfo = (updatedFields) => ({
+  type: EDIT_DELIVERY_INFO,
+  payload: updatedFields,
+});
+
+export const savePaymentInfo = (paymentInfo) => ({
+  type: SAVE_PAYMENT_INFO,
+  payload: paymentInfo,
 });
 
 export const clearCart = () => ({
