@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --primary-color: #4484ce;
+  --secondary-color: #f7fafc;
+  --accent-color: #f19f4d;
+  --text-color: #1d2731;
+  --border-color: #d9d9d9;
+  --border-shadow: #bdbdbdcc;
+  --success-color: #48bb78;
+  --addToCart-button-color: #ffbb28;
+  --addToCart-button-color-hover: #ffae00;
+  --button-color: #4484ce;
+  --button-color-hover: #1e6cc6;
+  --filter-option-color: black;
+}
+body {
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+/* Track (the background) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle (the moving part) */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

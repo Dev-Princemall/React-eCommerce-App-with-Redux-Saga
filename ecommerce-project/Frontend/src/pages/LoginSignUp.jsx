@@ -16,11 +16,6 @@ export default function LoginSignUp() {
     <div className="login-signup">
       <div className="main-container">
         <div className="info-container">
-          <img
-            src="/banner.jpg"
-            alt="Ecommerce Cart with person"
-            className="info-image"
-          />
           <h2 className="info-title">Lorem Ipsum is simply</h2>
           <p className="info-text">Lorem Ipsum is simply</p>
         </div>

@@ -11,14 +11,16 @@
 
 .info-container {
   flex: 1;
-  background-color: var(--button-color);
-  color: white;
-  padding: 20px;
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: url("https://cdn4.vectorstock.com/i/1000x1000/59/28/online-store-concept-banner-vertical-vector-25535928.jpg");
+  background-position: top;
+  background-size: cover;
+  color: white;
+  padding: 20px;
+  position: relative;
 }
 
 .info-image {
@@ -40,7 +42,8 @@
   font-size: 1.2rem;
 }
 
-.info-title, .info-text{
+.info-title,
+.info-text {
   display: flex;
   top: 0;
 }

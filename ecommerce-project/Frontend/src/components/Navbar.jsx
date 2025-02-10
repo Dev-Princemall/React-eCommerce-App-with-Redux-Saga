@@ -62,7 +62,6 @@ export default function Navbar() {
     return () => clearTimeout(delaySearch);
   }, [searchQuery, products]);
 
-  // ✅ Close search bar when clicking outside
   const handleClickOutside = (event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setIsSearchVisible(false);
@@ -175,11 +174,11 @@ export default function Navbar() {
             {isDropdownVisible && (
               <div className="dropdown-menu">
                 <ul>
-                  <li>
+                  {/* <li>
                     <Link to="/user/settings" className="dropdown-item">
                       <FaCog size={18} /> Settings
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <button onClick={handleLogout} className="dropdown-item">
                       <FaSignOutAlt size={18} /> Logout

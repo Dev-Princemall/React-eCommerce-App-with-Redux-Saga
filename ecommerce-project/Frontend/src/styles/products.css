@@ -7,7 +7,7 @@
   font-size: 24px;
   font-weight: bold;
   color: #ffffff;
-  background: linear-gradient(90deg, #ff6b6b, #556270);
+  background: linear-gradient(90deg, var(--accent-color), var(--border-color));
   animation: pulse 1.5s infinite;
   border-radius: 8px;
   padding: 20px;
@@ -39,20 +39,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* .filter-container {
-  display: flex;
-  justify-content: end;
-  gap: 20px;
-  margin-top: 10px;
-}
-.filter-container select,
-button {
-  padding: 3.5px;
-  font-size: large;
-  font-weight: 500;
-  border-radius: 8px;
-}  */
-
 /* Prevent styles from affecting child components */
 .products-container {
   max-width: 1200px;
@@ -78,17 +64,16 @@ button {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background: white;
   cursor: pointer;
-  background-color: rgb(179, 179, 179);
+  background-color: var(--border-color);
 }
 .filter-dropdown option {
   background-color: rgb(179, 179, 179);
-  color: var(--filter-option-color);
+  background-color: var(--border-color);
 }
 
 .reset-button {
-  background-color: #ff6600;
+  background-color: #f32f2f;
   color: white;
   padding: 10px 15px;
   font-size: 16px;
@@ -99,7 +84,7 @@ button {
 }
 
 .reset-button:hover {
-  background-color: #e65c00;
+  background-color: #a10b0b;
 }
 
 /* Loading & Error Messages */

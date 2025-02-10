@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1e1e2f;
+  background-color: var(--primary-color);
   padding: 15px 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -41,7 +41,7 @@
 }
 
 .navbar-links li a:hover {
-  color: #ffae00;
+  color: var(--accent-color);
 }
 
 .navbar-links li a,
@@ -52,9 +52,9 @@
 
 .navbar-links li a.active,
 .icons li a.active {
-  color: #ffae00;
+  color: var(--accent-color);
   font-weight: bold;
-  border-bottom: 2px solid #ffae00;
+  border-bottom: 2px solid var(--accent-color);
 }
 
 .icons {
@@ -79,7 +79,7 @@
 
 .icons li a:hover,
 .icons li button:hover {
-  color: #ffae00;
+  color: var(--accent-color);
 }
 
 .search-container {
@@ -131,7 +131,7 @@
   top: 120%;
   left: 0;
   width: 100%;
-  background-color: rgb(210, 203, 203);
+  background-color: var(--border-color);
   color: black;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -167,15 +167,10 @@
 }
 
 .product-name {
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: lighter;
+  font-size: 12px;
   margin-bottom: 4px;
   color: #181717;
-}
-
-.product-description {
-  font-size: 12px;
-  color: #777;
 }
 
 .no-results {
@@ -195,7 +190,7 @@
   position: absolute;
   top: 35px;
   right: 0;
-  background: #2a2a3d;
+  background: var(--border-color);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
@@ -211,9 +206,9 @@
 .dropdown-item {
   display: flex;
   align-items: center;
+  color: black;
   gap: 10px;
   padding: 12px 16px;
-  color: #ffffff;
   text-decoration: none;
   transition: color 0.3s ease;
   width: 100%;
@@ -221,7 +216,7 @@
 }
 
 .dropdown-item:hover {
-  color: #ff6b6b;
+  color: var(--accent-color);
 }
 
 .dropdown-item button {

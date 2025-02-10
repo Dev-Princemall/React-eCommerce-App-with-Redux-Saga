@@ -2,7 +2,7 @@
 .product-card {
   background: white;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(228, 217, 13, 0.516);
+  box-shadow: 0px 2px 1px var(--accent-color);
   padding: 15px;
   width: 250px;
   display: flex;
@@ -26,11 +26,10 @@
 
 /* Product Title */
 .product-title {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 600;
   margin: 10px 0;
-  color: #333;
-  /* height: 50px; */
+  color: var(--text-color);
   width: 250px;
 }
 .product-title p {
@@ -90,7 +89,7 @@
 .add-to-cart-button,
 .view-detail-button,
 .add-to-cart-button-disabled {
-  background-color: var(--addToCart-button-color);
+  background-color: var(--button-color);
   color: white;
   border: none;
   padding: 8px 12px;
@@ -102,10 +101,11 @@
 
 .add-to-cart-button:hover,
 .view-detail-button:hover {
-  background-color: var(--addToCart-button-color-hover);
+  background-color: var(--button-color-hover);
 }
 .add-to-cart-button-disabled {
-  background-color: #555;
+  background-color: var(--border-color);
+  color: var(--text-color);
   cursor: not-allowed;
 }
 /* Responsive */

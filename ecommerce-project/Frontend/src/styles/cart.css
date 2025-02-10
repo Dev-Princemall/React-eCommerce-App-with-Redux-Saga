@@ -1,10 +1,11 @@
 .cart-container {
-  max-width: 800px;
-  margin: 2rem auto;
+  /* max-width: 1100px; */
+  /* margin: 2rem auto; */
   padding: 2rem;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: calc(100vh - 82px - 81.06px);
 }
 
 .cart-title {
@@ -23,14 +24,22 @@
 .empty-cart {
   text-align: center;
   color: #666;
+  height: 52vh;
   font-size: 1.2rem;
 }
-
+.cart-products {
+  display: flex;
+  gap: 2rem;
+}
 .cart-items {
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .cart-item {
@@ -41,9 +50,9 @@
 }
 
 .cart-item-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
+  width: 238px;
+  height: 153px;
+  object-fit: contain;
   border-radius: 4px;
   margin-right: 1rem;
   transition: transform 0.2s ease-in-out;
@@ -75,20 +84,25 @@
 }
 
 .btn-action {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
   background-color: #f0f0f0;
   border: none;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 .btn-action:hover {
   background-color: #e0e0e0;
+}
+.btn-action > .icon {
+  margin: auto;
+  color: var(--accent-color);
 }
 
 .item-quantity {
@@ -98,16 +112,21 @@
 }
 
 .cart-summary {
-  background-color: #f9f9f9;
+  flex: 1;
+  position: sticky;
+  top: 1rem;
+  align-self: flex-start;
+  background-color: white;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.summary-item {
+/* .summary-item {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
-}
+} */
 
 .summary-total {
   display: flex;
@@ -119,16 +138,12 @@
   /* border-top: 2px solid #eee; */
 }
 
-.free {
-  color: #4caf50;
-}
-
 .checkout-btn {
   display: block;
   width: 100%;
   padding: 1rem;
   margin-top: 1.5rem;
-  background-color: #4caf50;
+  background-color: var(--button-color);
   color: white;
   border: none;
   border-radius: 4px;
@@ -138,7 +153,7 @@
 }
 
 .checkout-btn:hover {
-  background-color: #45a049;
+  background-color: var(--button-color-hover);
   transform: translateY(-2px);
 }
 

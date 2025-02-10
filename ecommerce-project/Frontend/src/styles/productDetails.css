@@ -31,7 +31,7 @@
   padding: 1.5rem;
   margin: 0;
   background-color: #ecf0f1;
-  border-bottom: 3px solid var(--addToCart-button-color);
+  border-bottom: 3px solid var(--button-color);
 }
 
 .product-details-section {
@@ -84,7 +84,7 @@
 
 .add-to-cart-detailsPage-button,
 .add-to-cart-detailsPage-button-disabled {
-  background-color: var(--addToCart-button-color);
+  background-color: var(--button-color);
   color: white;
   border: none;
   padding: 14px 28px;
@@ -100,7 +100,7 @@
 }
 
 .add-to-cart-detailsPage-button:hover {
-  background-color: var(--addToCart-button-color-hover);
+  background-color: var(--button-color-hover);
   transform: translateY(-3px);
 }
 

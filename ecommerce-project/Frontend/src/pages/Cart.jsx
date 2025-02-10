@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../redux/actions";
 import { selectLoggedUsers, selectLoggedUsersCart } from "../redux/selectors";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCart, AlertCircle, Plus, Minus } from "lucide-react";
+import { ShoppingCart, AlertCircle, Plus, Minus, Trash2 } from "lucide-react";
 
 export default function Cart() {
   const logged_user = useSelector(selectLoggedUsers);
@@ -44,7 +44,7 @@ export default function Cart() {
       {cart.length === 0 ? (
         <p className="empty-cart">Your cart is empty.</p>
       ) : (
-        <>
+        <div className="cart-products">
           <div className="cart-items">
             {cart.map((item) => (
               <div key={item.id} className="cart-item">
@@ -62,7 +62,13 @@ export default function Cart() {
                     onClick={() => handleRemove(item.id)}
                     className="btn-action"
                   >
-                    <Minus className="icon" />
+                    {item.quantity == 1 ? (
+                      <>
+                        <Trash2 className="icon" />
+                      </>
+                    ) : (
+                      <Minus className="icon" />
+                    )}
                   </button>
                   <span className="item-quantity">{item.quantity}</span>
                   <button
@@ -76,14 +82,6 @@ export default function Cart() {
             ))}
           </div>
           <div className="cart-summary">
-            {/* <div className="summary-item">
-              <span>Subtotal:</span>
-              <span>₹{calculateSubtotal()}</span>
-            </div> */}
-            {/* <div className="summary-item">
-              <span>Shipping:</span>
-              <span className="free">Free</span>
-            </div> */}
             <div className="summary-total">
               <span>Subtotal ({cart.length} items):</span>
               <span>₹{calculateSubtotal()}</span>
@@ -95,7 +93,7 @@ export default function Cart() {
               Proceed to Checkout
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
