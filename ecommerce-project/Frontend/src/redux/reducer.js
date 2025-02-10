@@ -14,6 +14,7 @@ import {
   ADD_DELIVERY_INFO,
   EDIT_DELIVERY_INFO,
   SAVE_PAYMENT_INFO,
+  ADD_ORDER_HISTORY,
 } from "./constants";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   },
   deliveryInfo: {}, // Stores delivery info by userId
   payment_info: null, // Store user's selected payment details
+  order_history: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -190,6 +192,17 @@ const reducer = (state = initialState, action) => {
     case CLEAR_ERROR_SUCCESS_STATE:
       return { ...state, authError: null, success: null };
 
+    case ADD_ORDER_HISTORY:
+      if (!state.logged_user) return state;
+      const user_id = state.logged_user.id;
+      const newOrder = action.payload;
+      return {
+        ...state,
+        order_history: {
+          ...state.order_history,
+          [user_id]: [...(state.order_history[user_id] || []), newOrder],
+        },
+      };
     case CLEAR_CART:
       if (!state.logged_user) return state;
       const uid = state.logged_user.id;

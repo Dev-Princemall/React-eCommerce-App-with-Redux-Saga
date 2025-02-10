@@ -8,6 +8,7 @@ import LoginSignUp from "./pages/LoginSignUp";
 import ContactUs from "./pages/ContactUs";
 import ProductDetails from "./pages/ProductDetail";
 import CheckOut from "./pages/CheckOut";
+import OrderHistory from "./pages/OrderHistory";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/footer";
 
@@ -25,6 +26,7 @@ export default function Routing() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/cart/checkout" element={<CheckOut />} />
         <Route path="/user" element={<Cart />} />
+        <Route path="/user/order-history" element={<OrderHistory />} />
         <Route path="/signup" element={<LoginSignUp islogin={false} />} />
         <Route path="/login" element={<LoginSignUp islogin={true} />} />
         <Route path="/logout" />

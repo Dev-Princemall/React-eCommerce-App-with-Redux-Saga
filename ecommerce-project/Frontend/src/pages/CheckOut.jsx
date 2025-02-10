@@ -11,12 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectLoggedUserDeliveryInfo,
   selectLoggedUserPaymentInfo,
+  selectLoggedUsersCart,
 } from "../redux/selectors";
-import { clearCart } from "../redux/actions";
+import { addOrderHistory, clearCart } from "../redux/actions";
 
 export default function Checkout() {
   const delivery_info = useSelector(selectLoggedUserDeliveryInfo);
   const payment_info = useSelector(selectLoggedUserPaymentInfo);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const user_cart = useSelector(selectLoggedUsersCart);
   const [paymentMethod, setPaymentMethod] = useState("pay on Delivery");
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPayment, setIsEditingPayment] = useState(false);
@@ -57,6 +60,9 @@ export default function Checkout() {
       toast.success("Order placed successfully");
       navigate("/");
     }
+    dispatch(
+      addOrderHistory(user_cart, delivery_info, payment_info, totalAmount)
+    );
   };
   const renderDeliveryInfo = () => {
     if (!delivery_info || isEditing)
@@ -149,7 +155,7 @@ export default function Checkout() {
           </section>
         </div>
         <div className="checkout-summary">
-          <CheckOutSummary />
+          <CheckOutSummary setTotalAmount={setTotalAmount} />
           <button className="checkout-button" onClick={handleCheckOut}>
             Place Your Order
           </button>

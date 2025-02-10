@@ -56,3 +56,10 @@ export const selectLoggedUserPaymentInfo = (state) => {
   const logged_user = selectLoggedUsers(state);
   return (logged_user && state.payment_info) || null;
 };
+
+export const selectLoggedUserOrderHistory = (state) => {
+  const logged_user = selectLoggedUsers(state);
+  return logged_user && state.order_history
+    ? state.order_history[logged_user.id] || null
+    : null;
+};

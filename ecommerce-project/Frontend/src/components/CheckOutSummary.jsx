@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { selectLoggedUsersCart } from "../redux/selectors";
 import { useSelector } from "react-redux";
 
-export const CheckOutSummary = () => {
+export const CheckOutSummary = ({ setTotalAmount }) => {
   const cart = useSelector(selectLoggedUsersCart);
   const shippingCharge = 100;
   const taxPercentage = 18;
@@ -22,6 +22,10 @@ export const CheckOutSummary = () => {
     shippingCharge -
     discount
   ).toFixed(2);
+
+  useEffect(() => {
+    setTotalAmount(parseFloat(total));
+  }, [total, setTotalAmount]);
 
   return (
     <div>

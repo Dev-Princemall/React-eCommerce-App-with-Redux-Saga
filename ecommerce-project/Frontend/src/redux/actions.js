@@ -14,6 +14,7 @@ import {
   ADD_DELIVERY_INFO,
   EDIT_DELIVERY_INFO,
   SAVE_PAYMENT_INFO,
+  ADD_ORDER_HISTORY,
 } from "./constants";
 
 export const fetchProductsRequest = () => ({ type: FETCH_PRODUCTS_REQUEST });
@@ -77,7 +78,36 @@ export const savePaymentInfo = (paymentInfo) => ({
   type: SAVE_PAYMENT_INFO,
   payload: paymentInfo,
 });
-
+export const addOrderHistory = (
+  cartItems,
+  delivery_info,
+  payment_info,
+  totalAmount
+) => ({
+  type: ADD_ORDER_HISTORY,
+  payload: {
+    orderId: Date.now(),
+    items: [...cartItems],
+    status: "processing",
+    shippingAddress:
+      delivery_info.houseNameNumber +
+      "," +
+      delivery_info.area +
+      "," +
+      delivery_info.landmark +
+      "," +
+      delivery_info.city +
+      "," +
+      delivery_info.state +
+      "-" +
+      delivery_info.pinCode +
+      "," +
+      delivery_info.country,
+    paymentInfo: payment_info,
+    total: totalAmount,
+    orderDate: new Date().toISOString(),
+  },
+});
 export const clearCart = () => ({
   type: CLEAR_CART,
 });

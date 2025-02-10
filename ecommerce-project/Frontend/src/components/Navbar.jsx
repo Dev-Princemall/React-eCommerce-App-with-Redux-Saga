@@ -5,6 +5,7 @@ import {
   FaCog,
   FaShoppingCart,
   FaSearch,
+  FaHistory,
 } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -179,6 +180,11 @@ export default function Navbar() {
                       <FaCog size={18} /> Settings
                     </Link>
                   </li> */}
+                  <li>
+                    <Link to="/user/order-history" className="dropdown-item">
+                      <FaHistory size={18} /> Order History
+                    </Link>
+                  </li>
                   <li>
                     <button onClick={handleLogout} className="dropdown-item">
                       <FaSignOutAlt size={18} /> Logout

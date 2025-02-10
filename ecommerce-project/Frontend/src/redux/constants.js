@@ -20,6 +20,7 @@ export const EDIT_DELIVERY_INFO = "EDIT_DELIVERY_INFO";
 
 export const SAVE_PAYMENT_INFO = "SAVE_PAYMENT_INFO";
 
+export const ADD_ORDER_HISTORY = "ADD_ORDER_HISTORY";
 
 export const CLEAR_CART = "CLEAR_CART";
 // export const RESET_STORE = "RESET_STORE";
