@@ -10,6 +10,7 @@ import ProductDetails from "./pages/ProductDetail";
 import CheckOut from "./pages/CheckOut";
 import OrderHistory from "./pages/OrderHistory";
 import AboutUs from "./pages/AboutUs";
+import { PageNotFound } from "./pages/PageNotFound";
 import Footer from "./components/footer";
 
 export default function Routing() {
@@ -30,6 +31,7 @@ export default function Routing() {
         <Route path="/signup" element={<LoginSignUp islogin={false} />} />
         <Route path="/login" element={<LoginSignUp islogin={true} />} />
         <Route path="/logout" />
+        <Route path="*" element={<>404 Page Not Found</>} />
       </Routes>
       <Footer />
     </Router>

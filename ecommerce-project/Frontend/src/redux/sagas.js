@@ -1,28 +1,25 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { fetchProductsFromAPI } from "../services/api";
 import {
-  FETCH_PRODUCTS_REQUEST,
-  FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_FAILURE,
-} from "./constants";
+  fetchProductsFailure,
+  fetchProductsRequest,
+  fetchProductsSuccess,
+} from "./actions";
 
 function* fetchProductsSaga() {
   try {
-    const response = yield call(
-      axios.get,
-      "https://fakestoreapi.com/products"
-    );
-    console.log("products:", response);
-    yield put({ type: FETCH_PRODUCTS_SUCCESS, payload: response.data });
+    const products = yield call(fetchProductsFromAPI);
+    console.log("products:", products);
+    yield put(fetchProductsSuccess(products));
   } catch (error) {
-    yield put({ type: FETCH_PRODUCTS_FAILURE, payload: error.message });
+    yield put(fetchProductsFailure(error.message));
     toast.error(error.message);
   }
 }
 
 function* rootSaga() {
-  yield takeLatest(FETCH_PRODUCTS_REQUEST, fetchProductsSaga);
+  yield takeLatest(fetchProductsRequest, fetchProductsSaga);
 }
 
 export default rootSaga;
