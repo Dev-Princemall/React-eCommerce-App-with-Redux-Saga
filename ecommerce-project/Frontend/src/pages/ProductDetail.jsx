@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { addToCart } from "../Redux/actions";
 import {
   selectProducts,
-  selectLoggedUsers,
   selectLoggedUsersCart,
+  selectAuthToken,
 } from "../redux/selectors";
 import "../styles/ProductDetails.css";
 
@@ -15,21 +15,19 @@ const ProductDetails = () => {
   const { productId } = useParams();
   const products = useSelector(selectProducts);
   const [product, setProduct] = useState(null);
-  const user = useSelector(selectLoggedUsers);
+  const token = useSelector(selectAuthToken);
   const userCart = useSelector(selectLoggedUsersCart);
   const dispatch = useDispatch();
 
-  // Convert productId to a number for proper comparison
-  const numericProductId = parseInt(productId, 10);
-  const isAlreadyAdded = userCart.some((item) => item.id === numericProductId);
+  const isAlreadyAdded = userCart.some((item) => item._id === productId);
 
   useEffect(() => {
-    const foundProduct = products.find((item) => item.id === numericProductId);
+    const foundProduct = products.find((item) => item._id === productId);
     setProduct(foundProduct);
-  }, [numericProductId, products]);
+  }, [productId, products]);
 
   const handleAddToCart = () => {
-    if (!user) {
+    if (!token) {
       toast.error("Please Login to Add Item to Cart");
       navigate("/login");
       return;

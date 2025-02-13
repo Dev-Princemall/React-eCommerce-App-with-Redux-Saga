@@ -9,10 +9,10 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutUser } from "../Redux/actions";
+import { logout } from "../Redux/actions";
 import {
   selectCartCount,
-  selectLoggedUsers,
+  selectLoggedUser,
   selectProducts,
 } from "../redux/selectors";
 import "../styles/navbar.css";
@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 
 export default function Navbar() {
   const location = useLocation();
-  const logged_user = useSelector(selectLoggedUsers);
+  const logged_user = useSelector(selectLoggedUser);
   const cartCount = useSelector(selectCartCount);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     setDropdownVisible(false);
-    dispatch(logoutUser());
+    dispatch(logout());
     navigate("/login");
     toast.success("Logged Out Successfully.");
   };

@@ -11,26 +11,28 @@ import { registerUserApi, loginUserApi } from "../../services/authApi";
 
 function* registerSaga(action) {
   try {
-    const user = yield call(registerUserApi, action.payload);
-    yield put(registerSuccess(user));
+    const { token, ...user } = yield call(registerUserApi, action.payload);
+    yield call([localStorage, "setItem"], "token", token);
+    yield call([localStorage, "setItem"], "user", JSON.stringify(user));
+    yield put(registerSuccess({ user, token }));
     toast.success("Registration successful!");
   } catch (error) {
-    yield put(
-      registerFailure(error.response?.data?.message || "Registration failed")
-    );
-    toast.error(error.response?.data?.message || "Registration failed");
+    const errorMessage = error.response?.data?.message || "Registration failed";
+    yield put(registerFailure(errorMessage));
+    toast.error(errorMessage);
   }
 }
 
 function* loginSaga(action) {
   try {
-    const user = yield call(loginUserApi, action.payload);
-    localStorage.setItem("user", JSON.stringify(user)); // Store user token
-    yield put(loginSuccess(user));
-    toast.success("Login successful!");
+    const { token, ...user } = yield call(loginUserApi, action.payload);
+    yield call([localStorage, "setItem"], "token", token);
+    yield call([localStorage, "setItem"], "user", JSON.stringify(user));
+    yield put(loginSuccess({ token, user }));
   } catch (error) {
-    yield put(loginFailure(error.response?.data?.message || "Login failed"));
-    toast.error(error.response?.data?.message || "Login failed");
+    const errorMessage = error.response?.data?.message || "Login failed";
+    yield put(loginFailure(errorMessage));
+    toast.error(errorMessage);
   }
 }
 

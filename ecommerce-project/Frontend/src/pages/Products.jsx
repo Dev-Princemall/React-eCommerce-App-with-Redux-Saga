@@ -8,10 +8,10 @@ import {
 import ProductList from "../Components/ProductList";
 import {
   selectFilteredAndSortedProducts,
-  selectLoading,
-  selectError,
   selectCategoryFilter,
   selectSortBy,
+  selectProductLoading,
+  selectProductError,
 } from "../redux/selectors";
 import "../styles/Products.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -19,8 +19,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Products() {
   const dispatch = useDispatch();
   const products = useSelector(selectFilteredAndSortedProducts);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
+  const loading = useSelector(selectProductLoading);
+  const error = useSelector(selectProductError);
   const categoryFilter = useSelector(selectCategoryFilter);
   const sortByFilter = useSelector(selectSortBy);
   const location = useLocation();

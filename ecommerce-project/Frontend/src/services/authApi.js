@@ -1,20 +1,28 @@
-import axios from "axios";
-
-const API_BASE_URL = "http://localhost:5000/api/auth";
+import { api, handleApiError } from "./api";
 
 export const registerUserApi = async (userData) => {
-  const response = await axios.post(`${API_BASE_URL}/register`, userData);
-  return response.data;
+  try {
+    const response = await api.post("/api/auth/register", userData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
 };
 
 export const loginUserApi = async (userData) => {
-  const response = await axios.post(`${API_BASE_URL}/login`, userData);
-  return response.data;
+  try {
+    const response = await api.post("/api/auth/login", userData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
 };
 
 export const getUserProfileApi = async (token) => {
-  const response = await axios.get(`${API_BASE_URL}/profile`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
+  try {
+    const response = await api.get("/api/auth/profile");
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
 };

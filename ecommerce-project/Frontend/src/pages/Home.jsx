@@ -3,18 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { fetchProductsRequest } from "../Redux/actions";
-import {
-  selectLoggedUsers,
-  selectUsers,
-  selectProducts,
-} from "../redux/selectors";
+import { selectProducts } from "../redux/selectors";
 import "../styles/home.css";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const users = useSelector(selectUsers);
-  const logged_user = useSelector(selectLoggedUsers);
   const products = useSelector(selectProducts);
+  // console.log("PRoducts:", products);
   useEffect(() => {
     dispatch(fetchProductsRequest());
   }, [dispatch]);
@@ -47,7 +42,7 @@ export default function Home() {
   };
 
   // Get featured products (first 6 products for example)
-  const featuredProducts = products.slice(0, 6);
+  const featuredProducts = (products || []).slice(0, 6);
   const categories = [
     "electronics",
     "men's clothing",
@@ -94,12 +89,12 @@ export default function Home() {
         <h3>Featured Products</h3>
         <Slider {...carouselSettings}>
           {featuredProducts.map((product) => (
-            <div key={product.id} className="carousel-item">
+            <div key={product._id} className="carousel-item">
               <img src={product.image} alt={product.title} />
               <div className="product-info">
                 <h4>{product.title}</h4>
                 <p>₹{product.price}</p>
-                <Link to={`/products/${product.id}`} className="view-details">
+                <Link to={`/products/${product._id}`} className="view-details">
                   View Details
                 </Link>
               </div>

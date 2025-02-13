@@ -99,7 +99,10 @@ export const loginRequest = (userData) => ({
   type: LOGIN_REQUEST,
   payload: userData,
 });
-export const loginSuccess = (user) => ({ type: LOGIN_SUCCESS, payload: user });
+export const loginSuccess = (user) => ({
+  type: LOGIN_SUCCESS,
+  payload: user,
+});
 export const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
   payload: error,
@@ -125,10 +128,6 @@ export const addUser = (user) => ({
 export const loginUser = (name, password) => ({
   type: LOGIN_USER,
   payload: { name, password },
-});
-
-export const logoutUser = () => ({
-  type: LOGOUT_USER,
 });
 
 export const setCategoryFilter = (category) => ({

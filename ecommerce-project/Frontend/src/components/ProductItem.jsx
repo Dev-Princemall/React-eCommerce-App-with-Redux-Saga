@@ -4,18 +4,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { addToCart } from "../Redux/actions";
 import { toast } from "react-toastify";
 import StarDistribution from "./StarDistribution";
-import { selectLoggedUsers, selectLoggedUsersCart } from "../redux/selectors";
+import { selectLoggedUser, selectLoggedUsersCart } from "../redux/selectors";
 import "../styles/productItem.css";
 
 const ProductItem = ({ product }) => {
   const [showDistribution, setShowDistribution] = useState(false);
-  const user = useSelector(selectLoggedUsers);
+  const user = useSelector(selectLoggedUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const userCart = useSelector(selectLoggedUsersCart);
 
-  const isAlreadyAdded = userCart.some((item) => item.id === product.id);
+  const isAlreadyAdded = userCart.some((item) => item._id === product._id);
 
   const handleAddToCart = () => {
     if (user) {
@@ -29,7 +29,7 @@ const ProductItem = ({ product }) => {
 
   return (
     <div className="product-card">
-      <Link to={`/products/${product.id}`} style={{ textDecoration: "none" }}>
+      <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
         <img
           src={product.image}
           alt={product.title}
@@ -72,7 +72,7 @@ const ProductItem = ({ product }) => {
           </button>
           <button
             className="view-detail-button"
-            onClick={() => navigate(`/products/${product.id}`)}
+            onClick={() => navigate(`/products/${product._id}`)}
           >
             View Detail
           </button>
