@@ -1,97 +1,16 @@
-// export const selectProducts = (state) => state.product?.products || [];
-
-// export const selectLoading = (state) => state.loading;
-
-// export const selectError = (state) => state.error;
-
-// export const selectAuthError = (state) => state.authError;
-// export const selectSuccess = (state) => state.success;
-
-// export const selectUsers = (state) => state.users;
-
-// export const selectLoggedUsers = (state) => state.logged_user;
-
-// export const selectLoggedUsersCart = (state) => {
-//   const logged_user = selectLoggedUsers(state);
-//   if (logged_user) {
-//     return state.carts[logged_user.id]?.cartItems || [];
-//   }
-//   return [];
-// };
-
-// export const selectCartCount = (state) => {
-//   const logged_user = selectLoggedUsers(state);
-//   return logged_user ? state.carts[logged_user.id]?.cartItems.length || 0 : 0;
-// };
-
-// export const selectCategoryFilter = (state) => state.filters.category;
-// export const selectSortBy = (state) => state.filters.sortBy;
-// export const selectFilteredAndSortedProducts = (state) => {
-//   const products = selectProducts(state);
-//   const category = selectCategoryFilter(state);
-//   const sortBy = selectSortBy(state);
-
-//   const filteredProducts = products.filter((product) =>
-//     category ? product.category === category : true
-//   );
-
-//   const sortedProducts = [...filteredProducts].sort((a, b) => {
-//     if (sortBy === "priceLowToHigh") return a.price - b.price;
-//     if (sortBy === "priceHighToLow") return b.price - a.price;
-//     if (sortBy === "nameAsc") return a.title.localeCompare(b.title);
-//     if (sortBy === "nameDesc") return b.title.localeCompare(a.title);
-//     return 0;
-//   });
-
-//   return sortedProducts;
-// };
-
-// export const selectLoggedUserDeliveryInfo = (state) => {
-//   const logged_user = selectLoggedUsers(state);
-//   return logged_user && state.deliveryInfo
-//     ? state.deliveryInfo[logged_user.id] || null
-//     : null;
-// };
-// export const selectLoggedUserPaymentInfo = (state) => {
-//   const logged_user = selectLoggedUsers(state);
-//   return (logged_user && state.payment_info) || null;
-// };
-
-// export const selectLoggedUserOrderHistory = (state) => {
-//   const logged_user = selectLoggedUsers(state);
-//   return logged_user && state.order_history
-//     ? state.order_history[logged_user.id] || null
-//     : null;
-// };
-
+// Product selectors
 export const selectProducts = (state) => state.product?.products || [];
 
 export const selectProductLoading = (state) => state.product?.loading || false;
 export const selectProductError = (state) => state.product?.error || null;
 
-export const selectLoggedUser = (state) => state.auth?.user || null;
-export const selectAuthToken = (state) => state.auth?.token || null;
-export const selectAuthError = (state) => state.auth?.error || null;
-export const selectAuthLoading = (state) => state.auth?.loading || null;
-// export const selectSuccess = (state) => state.auth?.success || false;
-
-export const selectLoggedUsersCart = (state) => {
-  const logged_user = selectLoggedUser(state);
-  return logged_user ? state.carts?.[logged_user.id]?.cartItems || [] : [];
-};
-
-export const selectCartCount = (state) => {
-  const logged_user = selectLoggedUser(state);
-  return logged_user
-    ? state.carts?.[logged_user._id]?.cartItems?.length || 0
-    : 0;
-};
-
-export const selectCategoryFilter = (state) => state.filters?.category || "";
-export const selectSortBy = (state) => state.filters?.sortBy || "";
+export const selectCategoryFilter = (state) =>
+  state.product?.filters?.category || "";
+export const selectSortBy = (state) => state.product?.filters?.sortBy || "";
 
 export const selectFilteredAndSortedProducts = (state) => {
   const products = selectProducts(state);
+  console.log("selectors Product in FIlterandsort: ", products);
   const category = selectCategoryFilter(state);
   const sortBy = selectSortBy(state);
 
@@ -108,6 +27,28 @@ export const selectFilteredAndSortedProducts = (state) => {
   });
 
   return sortedProducts;
+};
+
+// Users selectors
+export const selectLoggedUser = (state) => state.auth?.user || null;
+export const selectAuthToken = (state) => state.auth?.token || null;
+export const selectAuthError = (state) => state.auth?.error || null;
+export const selectAuthLoading = (state) => state.auth?.loading || null;
+// export const selectSuccess = (state) => state.auth?.success || false;
+
+// cart selectors
+export const selectCart = (state) => {
+  const logged_user = selectLoggedUser(state);
+  console.log("Cart At selector:", state.cart?.cart);
+  return logged_user ? state.cart?.cart || [] : [];
+};
+
+export const selectCartSuccess = (state) => state.cart?.success || false;
+export const selectCartError = (state) => state.cart?.error || false;
+
+export const selectCartCount = (state) => {
+  const logged_user = selectLoggedUser(state);
+  return logged_user ? state.cart?.cart?.items?.length || 0 : 0;
 };
 
 export const selectLoggedUserDeliveryInfo = (state) => {

@@ -18,21 +18,36 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  LOGIN_USER,
-  LOGOUT_USER,
-  ADD_USER,
+  GET_CART_REQUEST,
+  GET_CART_SUCCESS,
+  GET_CART_FAILURE,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_SUCCESS,
+  ADD_TO_CART_FAILURE,
+  UPDATE_CART_ITEM_REQUEST,
+  UPDATE_CART_ITEM_SUCCESS,
+  UPDATE_CART_ITEM_FAILURE,
+  INCREASE_QUANTITY_REQUEST,
+  INCREASE_QUANTITY_SUCCESS,
+  INCREASE_QUANTITY_FAILURE,
+  DECREASE_QUANTITY_REQUEST,
+  DECREASE_QUANTITY_SUCCESS,
+  DECREASE_QUANTITY_FAILURE,
+  REMOVE_CART_ITEM_REQUEST,
+  REMOVE_CART_ITEM_SUCCESS,
+  REMOVE_CART_ITEM_FAILURE,
+  CLEAR_CART_REQUEST,
+  CLEAR_CART_SUCCESS,
+  CLEAR_CART_FAILURE,
   SET_CATEGORY_FILTER,
   SET_SORT_BY,
-  CLEAR_ERROR_SUCCESS_STATE,
-  CLEAR_CART,
   ADD_DELIVERY_INFO,
   EDIT_DELIVERY_INFO,
   SAVE_PAYMENT_INFO,
   ADD_ORDER_HISTORY,
 } from "./constants";
 
+// product actions
 export const fetchProductsRequest = () => ({ type: FETCH_PRODUCTS_REQUEST });
 export const fetchProductsSuccess = (products) => ({
   type: FETCH_PRODUCTS_SUCCESS,
@@ -82,6 +97,7 @@ export const deleteProductFailure = (error) => ({
   payload: error,
 });
 
+// auth actions
 export const registerRequest = (userData) => ({
   type: REGISTER_REQUEST,
   payload: userData,
@@ -110,24 +126,96 @@ export const loginFailure = (error) => ({
 
 export const logout = () => ({ type: LOGOUT });
 
-export const addToCart = (item) => ({
-  type: ADD_TO_CART,
-  payload: item,
+// cart actions
+export const getCartRequest = (userId) => ({
+  type: GET_CART_REQUEST,
+  payload: userId,
+});
+export const getCartSuccess = (cart) => ({
+  type: GET_CART_SUCCESS,
+  payload: cart,
+});
+export const getCartFailure = (error) => ({
+  type: GET_CART_FAILURE,
+  payload: error,
 });
 
-export const removeFromCart = (id) => ({
-  type: REMOVE_FROM_CART,
-  payload: id,
+export const addToCartRequest = (productId, userId, quantity = 1) => ({
+  type: ADD_TO_CART_REQUEST,
+  payload: { productId, userId, quantity },
+});
+export const addToCartSuccess = (cart) => ({
+  type: ADD_TO_CART_SUCCESS,
+  payload: cart,
+});
+export const addToCartFailure = (error) => ({
+  type: ADD_TO_CART_FAILURE,
+  payload: error,
 });
 
-export const addUser = (user) => ({
-  type: ADD_USER,
-  payload: user,
+export const updateCartItemRequest = (productId, userId, quantity) => ({
+  type: UPDATE_CART_ITEM_REQUEST,
+  payload: { productId, userId, quantity },
+});
+export const updateCartItemSuccess = (cart) => ({
+  type: UPDATE_CART_ITEM_SUCCESS,
+  payload: cart,
+});
+export const updateCartItemFailure = (error) => ({
+  type: UPDATE_CART_ITEM_FAILURE,
+  payload: error,
 });
 
-export const loginUser = (name, password) => ({
-  type: LOGIN_USER,
-  payload: { name, password },
+export const increaseQuantityRequest = (productId, userId) => ({
+  type: INCREASE_QUANTITY_REQUEST,
+  payload: { productId, userId },
+});
+export const increaseQuantitySuccess = (cart) => ({
+  type: INCREASE_QUANTITY_SUCCESS,
+  payload: cart,
+});
+export const increaseQuantityFailure = (error) => ({
+  type: INCREASE_QUANTITY_FAILURE,
+  payload: error,
+});
+
+export const decreaseQuantityRequest = (productId, userId) => ({
+  type: DECREASE_QUANTITY_REQUEST,
+  payload: { productId, userId },
+});
+export const decreaseQuantitySuccess = (cart) => ({
+  type: DECREASE_QUANTITY_SUCCESS,
+  payload: cart,
+});
+export const decreaseQuantityFailure = (error) => ({
+  type: DECREASE_QUANTITY_FAILURE,
+  payload: error,
+});
+
+export const removeCartItemRequest = (productId, userId) => ({
+  type: REMOVE_CART_ITEM_REQUEST,
+  payload: { productId, userId },
+});
+export const removeCartItemSuccess = (cart) => ({
+  type: REMOVE_CART_ITEM_SUCCESS,
+  payload: cart,
+});
+export const removeCartItemFailure = (error) => ({
+  type: REMOVE_CART_ITEM_FAILURE,
+  payload: error,
+});
+
+export const clearCartRequest = (userId) => ({
+  type: CLEAR_CART_REQUEST,
+  payload: userId,
+});
+export const clearCartSuccess = (cart) => ({
+  type: CLEAR_CART_SUCCESS,
+  payload: cart,
+});
+export const clearCartFailure = (error) => ({
+  type: CLEAR_CART_FAILURE,
+  payload: error,
 });
 
 export const setCategoryFilter = (category) => ({
@@ -138,10 +226,6 @@ export const setCategoryFilter = (category) => ({
 export const setSortBy = (sortBy) => ({
   type: SET_SORT_BY,
   payload: sortBy,
-});
-
-export const clearErrorSuccessState = () => ({
-  type: CLEAR_ERROR_SUCCESS_STATE,
 });
 
 export const addDeliveryInfo = (deliveryInfo) => ({
@@ -186,7 +270,4 @@ export const addOrderHistory = (
     total: totalAmount,
     orderDate: new Date().toISOString(),
   },
-});
-export const clearCart = () => ({
-  type: CLEAR_CART,
 });

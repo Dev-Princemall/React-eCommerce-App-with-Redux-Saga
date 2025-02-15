@@ -9,17 +9,17 @@ import "../styles/CheckOut.css";
 import { CheckOutSummary } from "../components/CheckOutSummary";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectCart,
   selectLoggedUserDeliveryInfo,
   selectLoggedUserPaymentInfo,
-  selectLoggedUsersCart,
 } from "../redux/selectors";
-import { addOrderHistory, clearCart } from "../redux/actions";
+import { addOrderHistory } from "../redux/actions";
 
 export default function Checkout() {
   const delivery_info = useSelector(selectLoggedUserDeliveryInfo);
   const payment_info = useSelector(selectLoggedUserPaymentInfo);
   const [totalAmount, setTotalAmount] = useState(0);
-  const user_cart = useSelector(selectLoggedUsersCart);
+  const user_cart = useSelector(selectCart);
   const [paymentMethod, setPaymentMethod] = useState("pay on Delivery");
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPayment, setIsEditingPayment] = useState(false);
@@ -44,19 +44,19 @@ export default function Checkout() {
       return;
     }
     if (payment_info.method === "Pay on Delivery") {
-      dispatch(clearCart());
+      // dispatch(clearCart());
       toast.success("Order placed successfully");
       navigate("/");
     } else if (payment_info.method === "UPI") {
-      dispatch(clearCart());
+      // dispatch(clearCart());
       toast.success("Order placed successfully");
       navigate("/");
     } else if (payment_info.method === "Net Banking") {
-      dispatch(clearCart());
+      // dispatch(clearCart());
       toast.success("Order placed successfully");
       navigate("/");
     } else if (payment_info.method === "Credit/Debit Card") {
-      dispatch(clearCart());
+      // dispatch(clearCart());
       toast.success("Order placed successfully");
       navigate("/");
     }

@@ -5,7 +5,7 @@ import {
   addProductToAPI,
   deleteProductFromAPI,
   updateProductInAPI,
-} from "../../services/api";
+} from "../../services/productApi";
 import {
   fetchProductsFailure,
   fetchProductsSuccess,
