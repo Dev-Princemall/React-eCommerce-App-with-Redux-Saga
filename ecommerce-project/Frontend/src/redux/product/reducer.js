@@ -11,14 +11,8 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAILURE,
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  ADD_USER,
-  LOGIN_USER,
-  LOGOUT_USER,
   SET_CATEGORY_FILTER,
   SET_SORT_BY,
-  CLEAR_ERROR_SUCCESS_STATE,
   CLEAR_CART,
   ADD_DELIVERY_INFO,
   EDIT_DELIVERY_INFO,
@@ -28,13 +22,9 @@ import {
 
 const initialState = {
   products: [],
-  users: [],
-  carts: {}, // Stores cart items by userId
-  logged_user: null,
+  carts: {},
   loading: false,
   error: null,
-  success: null,
-  authError: null,
   filters: {
     category: "",
     sortBy: "",
@@ -104,94 +94,6 @@ const productReducer = (state = initialState, action) => {
         },
       };
 
-    case ADD_USER:
-      if (state.users.some((user) => user.name === action.payload.name)) {
-        return { ...state, authError: "User already exists" };
-      }
-      return {
-        ...state,
-        users: [...state.users, action.payload],
-        authError: null,
-        success: "User Registered Successfully",
-      };
-
-    case ADD_TO_CART: {
-      if (!state.logged_user) {
-        return state; // If no user is logged in, do nothing
-      }
-
-      const userId = state.logged_user.id;
-      const existingCart = state.carts[userId]?.cartItems || [];
-
-      const updatedCartItems = existingCart.some(
-        (item) => item.id === action.payload.id
-      )
-        ? existingCart.map((cartItem) =>
-            cartItem.id === action.payload.id
-              ? { ...cartItem, quantity: cartItem.quantity + 1 }
-              : cartItem
-          )
-        : [...existingCart, { ...action.payload, quantity: 1 }];
-
-      return {
-        ...state,
-        carts: {
-          ...state.carts,
-          [userId]: { id: userId, cartItems: updatedCartItems },
-        },
-      };
-    }
-
-    case REMOVE_FROM_CART: {
-      if (!state.logged_user) {
-        return state; // If no user is logged in, do nothing
-      }
-
-      const userId = state.logged_user.id;
-      const existingCart = state.carts[userId]?.cartItems || [];
-
-      const updatedCartItems = existingCart
-        .map((item) =>
-          item.id === action.payload
-            ? item.quantity > 1
-              ? { ...item, quantity: item.quantity - 1 }
-              : null
-            : item
-        )
-        .filter(Boolean);
-
-      return {
-        ...state,
-        carts: {
-          ...state.carts,
-          [userId]: {
-            id: userId,
-            cartItems: updatedCartItems,
-          },
-        },
-      };
-    }
-
-    case LOGIN_USER: {
-      const user = state.users.find(
-        (u) =>
-          u.name === action.payload.name &&
-          u.password === action.payload.password
-      );
-      if (user) {
-        return {
-          ...state,
-          logged_user: user,
-          authError: null,
-          success: "Login Successful",
-        };
-      }
-      return { ...state, authError: "Invalid credentials" };
-    }
-
-    case LOGOUT_USER:
-      return { ...state, logged_user: null, authError: null, filters: {} };
-
     case ADD_DELIVERY_INFO:
       if (!state.logged_user) {
         console.error("No logged-in user found.");
@@ -229,9 +131,6 @@ const productReducer = (state = initialState, action) => {
     case SAVE_PAYMENT_INFO:
       return { ...state, payment_info: action.payload };
 
-    case CLEAR_ERROR_SUCCESS_STATE:
-      return { ...state, authError: null, success: null };
-
     case ADD_ORDER_HISTORY:
       if (!state.logged_user) return state;
       const user_id = state.logged_user.id;
@@ -243,23 +142,6 @@ const productReducer = (state = initialState, action) => {
           [user_id]: [...(state.order_history[user_id] || []), newOrder],
         },
       };
-    case CLEAR_CART:
-      if (!state.logged_user) return state;
-      const uid = state.logged_user.id;
-
-      console.log("Before CLEAR_CART:", state.carts[uid]);
-
-      const newState = {
-        ...state,
-        carts: {
-          ...state.carts,
-          [uid]: { id: uid, cartItems: [] },
-        },
-      };
-
-      console.log("After CLEAR_CART:", newState.carts[uid]);
-
-      return newState;
 
     default:
       return state;

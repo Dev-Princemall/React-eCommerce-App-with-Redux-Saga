@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { selectLoggedUsersCart } from "../redux/selectors";
+import { selectCart } from "../redux/selectors";
 import { useSelector } from "react-redux";
 
 export const CheckOutSummary = ({ setTotalAmount }) => {
-  const cart = useSelector(selectLoggedUsersCart);
+  const cart = useSelector(selectCart);
   const shippingCharge = 100;
   const taxPercentage = 18;
 
   const calculateSubtotal = () => {
-    return cart
-      .reduce((total, item) => total + item.price * item.quantity, 0)
+    return cart?.items
+      ?.reduce((total, item) => total + item.productId.price * item.quantity, 0)
       .toFixed(2);
   };
 

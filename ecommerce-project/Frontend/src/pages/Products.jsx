@@ -33,7 +33,7 @@ export default function Products() {
 
   useEffect(() => {
     dispatch(fetchProductsRequest());
-  }, []);
+  }, [dispatch]);
 
   const resetFilters = () => {
     dispatch(setCategoryFilter(""));

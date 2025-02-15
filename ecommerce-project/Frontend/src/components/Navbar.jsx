@@ -10,13 +10,13 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../Redux/actions";
+import { toast } from "react-toastify";
 import {
   selectCartCount,
   selectLoggedUser,
   selectProducts,
 } from "../redux/selectors";
 import "../styles/navbar.css";
-import { toast } from "react-toastify";
 
 export default function Navbar() {
   const location = useLocation();

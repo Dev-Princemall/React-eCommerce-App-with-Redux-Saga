@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addToCart } from "../Redux/actions";
+import { addToCartRequest } from "../Redux/actions";
 import { toast } from "react-toastify";
 import StarDistribution from "./StarDistribution";
-import { selectLoggedUser, selectLoggedUsersCart } from "../redux/selectors";
+import { selectCart, selectLoggedUser } from "../redux/selectors";
 import "../styles/productItem.css";
 
 const ProductItem = ({ product }) => {
@@ -13,13 +13,15 @@ const ProductItem = ({ product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userCart = useSelector(selectLoggedUsersCart);
+  const userCart = useSelector(selectCart) ?? { cart: { items: [] } };
 
-  const isAlreadyAdded = userCart.some((item) => item._id === product._id);
+  const isAlreadyAdded =
+    userCart?.items?.some((item) => item.productId._id === product._id) ||
+    false;
 
   const handleAddToCart = () => {
     if (user) {
-      dispatch(addToCart(product));
+      dispatch(addToCartRequest(product._id, user._id));
       toast.success("Item Added to Cart Successfully");
     } else {
       navigate("/login");

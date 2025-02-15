@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { addToCart } from "../Redux/actions";
+import { addToCartRequest } from "../Redux/actions";
 import {
   selectProducts,
-  selectLoggedUsersCart,
   selectAuthToken,
+  selectCart,
 } from "../redux/selectors";
 import "../styles/ProductDetails.css";
 
@@ -15,8 +15,9 @@ const ProductDetails = () => {
   const { productId } = useParams();
   const products = useSelector(selectProducts);
   const [product, setProduct] = useState(null);
+  const success = useSelector(selectCartSuccess);
   const token = useSelector(selectAuthToken);
-  const userCart = useSelector(selectLoggedUsersCart);
+  const userCart = useSelector(selectCart);
   const dispatch = useDispatch();
 
   const isAlreadyAdded = userCart.some((item) => item._id === productId);
@@ -32,12 +33,13 @@ const ProductDetails = () => {
       navigate("/login");
       return;
     }
-
-    if (product) {
-      dispatch(addToCart(product));
+    dispatch(addToCartRequest(product));
+  };
+  useEffect(() => {
+    if (success) {
       toast.success("Item Added to Cart Successfully");
     }
-  };
+  }, [success]);
 
   if (!product)
     return (
