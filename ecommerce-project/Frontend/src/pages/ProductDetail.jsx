@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { addToCartRequest } from "../Redux/actions";
 import {
   selectProducts,
+  selectCartSuccess,
   selectAuthToken,
   selectCart,
 } from "../redux/selectors";
@@ -20,7 +21,9 @@ const ProductDetails = () => {
   const userCart = useSelector(selectCart);
   const dispatch = useDispatch();
 
-  const isAlreadyAdded = userCart.some((item) => item._id === productId);
+  const isAlreadyAdded = userCart?.items?.some(
+    (item) => item.productId._id === productId
+  );
 
   useEffect(() => {
     const foundProduct = products.find((item) => item._id === productId);

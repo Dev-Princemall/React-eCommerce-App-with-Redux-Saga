@@ -125,15 +125,18 @@ export const updateCartItem = async (req, res) => {
 export const increaseQuantity = async (req, res) => {
   const { productId, userId } = req.body;
   try {
-    const cart = await Cart.findOne(new mongoose.Types.ObjectId(userId));
+    console.log("For increase quantity: Received");
+    const cart = await Cart.findOne({ userId });
+    console.log("type converted");
     if (!cart) return res.status(404).json({ message: "Cart not found" });
-
+    console.log("For increase quantity: Cart found");
     const item = cart.items.find((item) => item.productId.equals(productId));
     if (!item)
       return res.status(404).json({ message: "Item not found in cart" });
-
+    console.log("For increase quantity: Item found");
     item.quantity += 1;
     await cart.save();
+    console.log("For increase quantity: Cart updated successfully");
     res.status(200).json(cart);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
@@ -144,7 +147,7 @@ export const increaseQuantity = async (req, res) => {
 export const decreaseQuantity = async (req, res) => {
   const { productId, userId } = req.body;
   try {
-    const cart = await Cart.findOne(new mongoose.Types.ObjectId(userId));
+    const cart = await Cart.findOne({ userId });
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
     const item = cart.items.find((item) => item.productId.equals(productId));

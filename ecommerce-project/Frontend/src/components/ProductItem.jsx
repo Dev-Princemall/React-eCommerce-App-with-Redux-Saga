@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCartRequest } from "../Redux/actions";
 import { toast } from "react-toastify";
 import StarDistribution from "./StarDistribution";
-import { selectCart, selectLoggedUser } from "../redux/selectors";
+import {
+  selectCart,
+  selectCartSuccess,
+  selectLoggedUser,
+} from "../redux/selectors";
 import "../styles/productItem.css";
 
 const ProductItem = ({ product }) => {
   const [showDistribution, setShowDistribution] = useState(false);
   const user = useSelector(selectLoggedUser);
+  const isProductAdded = useSelector(selectCartSuccess);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,12 +27,17 @@ const ProductItem = ({ product }) => {
   const handleAddToCart = () => {
     if (user) {
       dispatch(addToCartRequest(product._id, user._id));
-      toast.success("Item Added to Cart Successfully");
     } else {
       navigate("/login");
       toast.error("Please Login to Add Item to Cart");
     }
   };
+
+  useEffect(() => {
+    if (isProductAdded) {
+      toast.success("Item Added to Cart Successfully");
+    }
+  }, [isProductAdded]);
 
   return (
     <div className="product-card">

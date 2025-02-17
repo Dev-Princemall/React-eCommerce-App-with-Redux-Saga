@@ -6,6 +6,7 @@ import {
   registerFailure,
   loginSuccess,
   loginFailure,
+  getCartRequest,
 } from "../actions";
 import { registerUserApi, loginUserApi } from "../../services/authApi";
 
@@ -29,6 +30,7 @@ function* loginSaga(action) {
     yield call([localStorage, "setItem"], "token", token);
     yield call([localStorage, "setItem"], "user", JSON.stringify(user));
     yield put(loginSuccess({ token, user }));
+    yield call(getCartRequest(user?._id));
   } catch (error) {
     const errorMessage = error.response?.data?.message || "Login failed";
     yield put(loginFailure(errorMessage));

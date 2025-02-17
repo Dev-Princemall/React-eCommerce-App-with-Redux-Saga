@@ -113,6 +113,7 @@ import {
   decreaseQuantityRequest,
   removeCartItemRequest,
   getCartRequest,
+  increaseQuantityRequest,
 } from "../redux/actions";
 import { selectCart } from "../redux/selectors";
 import { useNavigate } from "react-router-dom";
@@ -129,7 +130,7 @@ export default function Cart() {
     if (userId) {
       dispatch(getCartRequest(userId));
     }
-  }, [userId, dispatch]);
+  }, [userId, dispatch, cart]);
 
   // Calculate cart subtotal
   const calculateSubtotal = () =>
@@ -139,7 +140,7 @@ export default function Cart() {
 
   // Cart actions
   const handleAdd = (productId) => {
-    dispatch(addToCartRequest(userId, productId));
+    dispatch(increaseQuantityRequest(productId, userId));
   };
 
   const handleRemove = (productId) => {
@@ -147,7 +148,7 @@ export default function Cart() {
   };
 
   const handleDecrease = (productId) => {
-    dispatch(decreaseQuantityRequest(userId, productId));
+    dispatch(decreaseQuantityRequest(productId, userId));
   };
 
   if (!userId) {
