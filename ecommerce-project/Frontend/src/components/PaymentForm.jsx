@@ -28,6 +28,7 @@ export default function PaymentForm({ paymentMethod, onFinish }) {
   };
 
   const handleSubmit = () => {
+    console.log("AT HANDLE SUBMIT", formData);
     if (paymentMethod === "UPI") {
       const upiRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]+$/;
       if (!upiRegex.test(formData.upiID)) {
@@ -55,9 +56,9 @@ export default function PaymentForm({ paymentMethod, onFinish }) {
       setError(null);
     } else if (paymentMethod === "Pay on Delivery") {
       dispatch(savePaymentInfo({ method: "Pay on Delivery" }));
+      console.log(" In store payment info", existingPaymentDetail);
     }
     if (onFinish) onFinish();
-    // alert("Payment method Added");
   };
 
   return (

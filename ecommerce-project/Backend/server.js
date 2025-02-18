@@ -5,6 +5,7 @@ import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,8 @@ mongoose
 app.use("/products", productRoutes);
 
 app.use("/api/cart", cartRoutes);
+
+app.use("/api/orders", orderRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

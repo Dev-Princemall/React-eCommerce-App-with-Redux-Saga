@@ -13,10 +13,8 @@ import {
   DELETE_PRODUCT_FAILURE,
   SET_CATEGORY_FILTER,
   SET_SORT_BY,
-  CLEAR_CART,
   ADD_DELIVERY_INFO,
   EDIT_DELIVERY_INFO,
-  SAVE_PAYMENT_INFO,
   ADD_ORDER_HISTORY,
 } from "../constants";
 
@@ -127,10 +125,6 @@ const productReducer = (state = initialState, action) => {
         },
       };
     }
-
-    case SAVE_PAYMENT_INFO:
-      return { ...state, payment_info: action.payload };
-
     case ADD_ORDER_HISTORY:
       if (!state.logged_user) return state;
       const user_id = state.logged_user.id;

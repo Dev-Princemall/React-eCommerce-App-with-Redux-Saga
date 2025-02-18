@@ -1,7 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Search,
   Filter,
@@ -10,25 +8,28 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import { selectLoggedUserOrderHistory } from "../redux/selectors";
+import { selectOrders } from "../redux/selectors";
 import "../styles/OrderHistory.css";
+import { fetchOrderHistory } from "../redux/order/actions";
 
 export default function OrderHistory() {
-  const orderHistory = useSelector(selectLoggedUserOrderHistory) || [];
+  const orderHistory = useSelector(selectOrders) || [];
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [sortOrder, setSortOrder] = useState("desc");
   const [expandedOrders, setExpandedOrders] = useState([]);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchOrderHistory());
+  }, [dispatch]);
   const filteredOrders = orderHistory
     .filter((order) => {
-      const orderIdMatch = order.orderId
-        .toString()
+      const orderIdMatch = order._id
+        ?.toString()
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
-
       const productMatch = order.items?.some((item) =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+        item.productId.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       return orderIdMatch || productMatch;
@@ -47,7 +48,23 @@ export default function OrderHistory() {
         : [...prev, orderId]
     );
   };
-
+  const printDeliveryAddress = (address) => {
+    return (
+      address["houseNumber"] +
+      "," +
+      address["street"] +
+      "," +
+      address["landmark"] +
+      "," +
+      address["city"] +
+      "," +
+      address["state"] +
+      "-" +
+      address["postalCode"] +
+      "," +
+      address["country"]
+    );
+  };
   return (
     <div className="order-history-container">
       <h1 className="order-history-title">Your Orders</h1>
@@ -96,43 +113,49 @@ export default function OrderHistory() {
           <p className="no-orders">No orders found.</p>
         ) : (
           filteredOrders.map((order) => (
-            <div key={order.orderId} className="order-item">
+            <div key={order._id} className="order-item">
               <div
                 className="order-header"
-                onClick={() => toggleOrderExpansion(order.orderId)}
+                onClick={() => toggleOrderExpansion(order._id)}
               >
                 <div className="order-icon">
                   <Package size={24} />
                 </div>
                 <div className="order-info">
-                  <h2>Order #{order.orderId}</h2>
-                  <p>{order.items.length} item(s)</p>
+                  <h2>Order #{order._id}</h2>
+                  <p>{order.items?.length || 0} item(s)</p>
                 </div>
                 <div className="order-date">
                   <Calendar size={20} />
                   <span>
-                    {order.orderDate
-                      ? new Date(order.orderDate).toLocaleDateString()
+                    {order.createdAt
+                      ? new Date(order.createdAt).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })
                       : "N/A"}
                   </span>
                 </div>
                 <div className={`order-status ${order.status.toLowerCase()}`}>
                   {order.status}
                 </div>
-                {expandedOrders.includes(order.orderId) ? (
+                {expandedOrders.includes(order._id) ? (
                   <ChevronUp size={20} />
                 ) : (
                   <ChevronDown size={20} />
                 )}
               </div>
-              {expandedOrders.includes(order.orderId) && (
+              {expandedOrders.includes(order._id) && (
                 <div className="order-details">
                   <p>
-                    <strong>Total:</strong> ₹{order.total}
+                    <strong>Total:</strong> ₹
+                    {order.totalAmount?.toFixed(2) || "0.00"}
                   </p>
                   <p>
                     <strong>Shipping Address:</strong>{" "}
-                    {order.shippingAddress || "Not provided"}
+                    {printDeliveryAddress(order.deliveryAddress) ||
+                      "Not provided"}
                   </p>
                   {order.trackingNumber && (
                     <p>
@@ -141,15 +164,17 @@ export default function OrderHistory() {
                   )}
                   <div className="order-items-list">
                     <ul>
-                      {order.items.map((item, index) => (
+                      {order.items?.map((item, index) => (
                         <li key={index} className="order-item-row">
                           <img
-                            src={item.image}
-                            alt={item.title}
+                            src={item.productId.image}
+                            alt={item.productId.title}
                             className="order-item-image"
                           />
                           <div className="order-item-info">
-                            <p className="order-item-title">{item.title}</p>
+                            <p className="order-item-title">
+                              {item.productId.title}
+                            </p>
                             <p className="order-item-price">
                               {item.quantity}x (₹{item.price.toFixed(2)})
                             </p>

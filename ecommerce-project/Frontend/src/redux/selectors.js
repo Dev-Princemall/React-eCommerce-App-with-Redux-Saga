@@ -40,8 +40,7 @@ export const selectLoggedUserDeliveryInfo = (state) =>
   state.auth?.user?.address || null;
 
 export const selectLoggedUserPaymentInfo = (state) => {
-  const logged_user = selectLoggedUser(state);
-  return logged_user ? state.payment_info?.[logged_user._id] || null : null;
+  return state.auth?.payment_info || null;
 };
 
 // cart selectors
@@ -62,3 +61,9 @@ export const selectLoggedUserOrderHistory = (state) => {
   const logged_user = selectLoggedUser(state);
   return logged_user ? state.order_history?.[logged_user._id] || [] : [];
 };
+
+// order selectors
+export const selectOrders = (state) => state.orders.orders;
+export const selectOrderDetails = (state) => state.orders.orderDetails;
+export const selectOrderLoading = (state) => state.orders.loading;
+export const selectOrderError = (state) => state.orders.error;

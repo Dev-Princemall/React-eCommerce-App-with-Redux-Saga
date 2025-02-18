@@ -12,6 +12,7 @@ import {
   UPDATE_USER_PROFILE_SUCCESS,
   FETCH_USER_PROFILE_SUCCESS,
   UPDATE_USER_PROFILE_REQUEST,
+  SAVE_PAYMENT_INFO,
 } from "../constants";
 
 const initialState = {
@@ -20,6 +21,7 @@ const initialState = {
   loading: false,
   error: null,
   success: false,
+  payment_info: {},
 };
 
 const authReducer = (state = initialState, action) => {
@@ -78,7 +80,9 @@ const authReducer = (state = initialState, action) => {
         error: null,
         success: true,
       };
-
+    case SAVE_PAYMENT_INFO:
+      console.log("Saving Payment Info:", action.payload);
+      return { ...state, payment_info: action.payload };
     default:
       return state;
   }

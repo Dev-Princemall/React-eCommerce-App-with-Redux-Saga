@@ -14,7 +14,8 @@ import {
   selectLoggedUserPaymentInfo,
   selectUserData,
 } from "../redux/selectors";
-import { addOrderHistory, fetchUserProfileRequest } from "../redux/actions";
+import { fetchUserProfileRequest } from "../redux/actions";
+import { placeOrder } from "../redux/order/actions";
 
 export default function Checkout() {
   const userData = useSelector(selectUserData);
@@ -48,26 +49,14 @@ export default function Checkout() {
       toast.error("Please fill in your delivery and payment information");
       return;
     }
-    if (payment_info.method === "Pay on Delivery") {
-      // dispatch(clearCart());
-      toast.success("Order placed successfully");
-      navigate("/");
-    } else if (payment_info.method === "UPI") {
-      // dispatch(clearCart());
-      toast.success("Order placed successfully");
-      navigate("/");
-    } else if (payment_info.method === "Net Banking") {
-      // dispatch(clearCart());
-      toast.success("Order placed successfully");
-      navigate("/");
-    } else if (payment_info.method === "Credit/Debit Card") {
-      // dispatch(clearCart());
-      toast.success("Order placed successfully");
-      navigate("/");
-    }
-    dispatch(
-      addOrderHistory(user_cart, delivery_info, payment_info, totalAmount)
-    );
+    const orderData = {
+      items: user_cart,
+      totalAmount,
+      deliveryAddress: delivery_info,
+      paymentMethod: JSON.stringify(payment_info),
+    };
+    console.log("Order Data:", orderData);
+    dispatch(placeOrder(orderData));
   };
   const renderDeliveryInfo = () => {
     if (!delivery_info || isEditing)
@@ -139,6 +128,7 @@ export default function Checkout() {
             {!payment_info || isEditingPayment ? (
               <>
                 <div className="payment-options">{renderPaymentOptions()}</div>
+                {console.log("Payment Method selected: ", paymentMethod)}
                 <PaymentForm
                   paymentMethod={paymentMethod}
                   onFinish={() => setIsEditingPayment(false)}
