@@ -12,10 +12,12 @@ import {
   selectCart,
   selectLoggedUserDeliveryInfo,
   selectLoggedUserPaymentInfo,
+  selectUserData,
 } from "../redux/selectors";
-import { addOrderHistory } from "../redux/actions";
+import { addOrderHistory, fetchUserProfileRequest } from "../redux/actions";
 
 export default function Checkout() {
+  const userData = useSelector(selectUserData);
   const delivery_info = useSelector(selectLoggedUserDeliveryInfo);
   const payment_info = useSelector(selectLoggedUserPaymentInfo);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -23,13 +25,13 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState("pay on Delivery");
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingPayment, setIsEditingPayment] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("delivery_info:", delivery_info);
-    console.log("payment_info:", payment_info);
-  }, [delivery_info, payment_info]);
+    dispatch(fetchUserProfileRequest());
+  }, [dispatch]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -37,7 +39,10 @@ export default function Checkout() {
   const handleEditPayment = () => {
     setIsEditingPayment(true);
   };
-
+  const handleFinish = () => {
+    setIsEditing(false);
+    dispatch(fetchUserProfileRequest());
+  };
   const handleCheckOut = () => {
     if (!payment_info || !delivery_info) {
       toast.error("Please fill in your delivery and payment information");
@@ -66,15 +71,15 @@ export default function Checkout() {
   };
   const renderDeliveryInfo = () => {
     if (!delivery_info || isEditing)
-      return <ShippingForm onFinish={() => setIsEditing(false)} />;
+      return <ShippingForm onFinish={handleFinish} />;
 
     return (
       <div className="delivery-info">
         <div className="delivery-address">
           <p>
-            {delivery_info.houseNameNumber},{delivery_info.area},
+            {delivery_info.houseNumber},{delivery_info.street},
             {delivery_info.landmark},{delivery_info.city},{delivery_info.state}-
-            {delivery_info.pinCode},{delivery_info.country}{" "}
+            {delivery_info.postalCode},{delivery_info.country}{" "}
           </p>
         </div>
         <Edit className="icon editIcon" onClick={handleEdit} />
@@ -117,7 +122,7 @@ export default function Checkout() {
             <h2>
               <Truck className="icon" />{" "}
               {delivery_info
-                ? `Shipping to ${delivery_info?.fullName}`
+                ? `Shipping to ${userData?.fullName}`
                 : "Add Shipping Information"}
             </h2>
             {renderDeliveryInfo()}

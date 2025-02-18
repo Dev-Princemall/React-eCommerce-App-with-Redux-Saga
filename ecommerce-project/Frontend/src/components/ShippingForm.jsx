@@ -1,19 +1,33 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addDeliveryInfo, editDeliveryInfo } from "../redux/actions";
-import { selectLoggedUserDeliveryInfo } from "../redux/selectors";
+import {
+  addDeliveryInfo,
+  editDeliveryInfo,
+  updateUserProfileRequest,
+} from "../redux/actions";
+import {
+  selectAuthError,
+  selectAuthSuccess,
+  selectLoggedUser,
+  selectLoggedUserDeliveryInfo,
+} from "../redux/selectors";
 
 export default function ShippingForm({ onFinish }) {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState();
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const error = useSelector(selectAuthError);
+  const successMsg = useSelector(selectAuthSuccess);
+  const user = useSelector(selectLoggedUser);
   const existingDeliveryInfo = useSelector(selectLoggedUserDeliveryInfo);
-
+  console.log("EXISTING DELIVERY INFO", existingDeliveryInfo);
   const [formData, setFormData] = useState({
     country: "",
     fullName: "",
-    mobileNo: "",
-    pinCode: "",
-    houseNameNumber: "",
-    area: "",
+    phoneNumber: "",
+    postalCode: "",
+    houseNumber: "",
+    street: "",
     landmark: "",
     city: "",
     state: "",
@@ -21,7 +35,19 @@ export default function ShippingForm({ onFinish }) {
 
   useEffect(() => {
     if (existingDeliveryInfo) {
-      setFormData(existingDeliveryInfo);
+      setFormData((prevForm) => ({
+        ...prevForm,
+        country: user?.address?.country,
+        fullName: user?.fullName,
+        phoneNumber: user?.phoneNumber,
+        postalCode: user?.address?.postalCode,
+        houseNumber: user?.address?.houseNumber,
+        street: user?.address?.street,
+        landmark: user?.address?.landmark,
+        city: user?.address?.city,
+        state: user?.address?.state,
+      }));
+      console.log("After setting form data:", formData);
     }
   }, [existingDeliveryInfo]);
 
@@ -33,15 +59,19 @@ export default function ShippingForm({ onFinish }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (existingDeliveryInfo) {
-      dispatch(editDeliveryInfo(formData));
-    } else {
-      dispatch(addDeliveryInfo(formData));
-    }
-    if (onFinish) onFinish();
+    setLoading(true);
+    dispatch(updateUserProfileRequest(formData));
+    setIsFormSubmitted(true);
   };
+
+  useEffect(() => {
+    if (isFormSubmitted && successMsg) {
+      setLoading(false);
+      if (onFinish) onFinish();
+    }
+  }, [successMsg, isFormSubmitted]);
 
   return (
     <form className="shipping-form" onSubmit={handleSubmit}>
@@ -78,54 +108,54 @@ export default function ShippingForm({ onFinish }) {
       </div>
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="mobileNo">Mobile number</label>
+          <label htmlFor="phoneNumber">Mobile number</label>
           <input
             type="text"
-            id="mobileNo"
-            name="mobileNo"
+            id="phoneNumber"
+            name="phoneNumber"
             required
-            value={formData.mobileNo}
+            value={formData.phoneNumber}
             onChange={handleChange}
           />
         </div>
       </div>
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="pinCode">PinCode</label>
+          <label htmlFor="postalCode">postalCode</label>
           <input
             type="text"
-            id="pinCode"
-            name="pinCode"
+            id="postalCode"
+            name="postalCode"
             required
-            value={formData.pinCode}
+            value={formData.postalCode}
             onChange={handleChange}
           />
         </div>
       </div>
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="houseNameNumber">
+          <label htmlFor="houseNumber">
             Flat, House no., Building, Company, Apartment
           </label>
           <input
             type="text"
-            id="houseNameNumber"
-            name="houseNameNumber"
+            id="houseNumber"
+            name="houseNumber"
             required
-            value={formData.houseNameNumber}
+            value={formData.houseNumber}
             onChange={handleChange}
           />
         </div>
       </div>
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="area">Area, Street, Sector, Village</label>
+          <label htmlFor="street">street, Street, Sector, Village</label>
           <input
             type="text"
-            id="area"
-            name="area"
+            id="street"
+            name="street"
             required
-            value={formData.area}
+            value={formData.street}
             onChange={handleChange}
           />
         </div>
@@ -167,8 +197,17 @@ export default function ShippingForm({ onFinish }) {
           />
         </div>
       </div>
-      <button type="submit" className="shipping-form-add-info-btn">
-        {existingDeliveryInfo ? "Update Info" : "Add Info"}
+      {error && <div className="alert alert-danger">{error}</div>}
+      <button
+        type="submit"
+        className="shipping-form-add-info-btn"
+        disabled={loading}
+      >
+        {loading
+          ? "Updating..."
+          : existingDeliveryInfo
+          ? "Update Info"
+          : "Add Info"}
       </button>
     </form>
   );

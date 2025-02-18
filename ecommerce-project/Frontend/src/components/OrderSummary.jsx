@@ -2,7 +2,6 @@ import { selectCart } from "../redux/selectors";
 import { useSelector } from "react-redux";
 export default function OrderSummary() {
   const cart = useSelector(selectCart);
-  console.log(cart);
   return (
     <div className="order-summary">
       {cart?.items?.map((item, index) => {

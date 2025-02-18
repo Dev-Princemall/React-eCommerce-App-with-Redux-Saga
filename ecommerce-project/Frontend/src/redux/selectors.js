@@ -34,12 +34,19 @@ export const selectLoggedUser = (state) => state.auth?.user || null;
 export const selectAuthToken = (state) => state.auth?.token || null;
 export const selectAuthError = (state) => state.auth?.error || null;
 export const selectAuthLoading = (state) => state.auth?.loading || null;
-// export const selectSuccess = (state) => state.auth?.success || false;
+export const selectAuthSuccess = (state) => state.auth?.success || false;
+export const selectUserData = (state) => state.auth?.user || null;
+export const selectLoggedUserDeliveryInfo = (state) =>
+  state.auth?.user?.address || null;
+
+export const selectLoggedUserPaymentInfo = (state) => {
+  const logged_user = selectLoggedUser(state);
+  return logged_user ? state.payment_info?.[logged_user._id] || null : null;
+};
 
 // cart selectors
 export const selectCart = (state) => {
   const logged_user = selectLoggedUser(state);
-  console.log("Cart At selector:", state.cart?.cart);
   return logged_user ? state.cart?.cart || [] : [];
 };
 
@@ -49,16 +56,6 @@ export const selectCartError = (state) => state.cart?.error || false;
 export const selectCartCount = (state) => {
   const logged_user = selectLoggedUser(state);
   return logged_user ? state.cart?.cart?.items?.length || 0 : 0;
-};
-
-export const selectLoggedUserDeliveryInfo = (state) => {
-  const logged_user = selectLoggedUser(state);
-  return logged_user ? state.deliveryInfo?.[logged_user._id] || null : null;
-};
-
-export const selectLoggedUserPaymentInfo = (state) => {
-  const logged_user = selectLoggedUser(state);
-  return logged_user ? state.payment_info?.[logged_user._id] || null : null;
 };
 
 export const selectLoggedUserOrderHistory = (state) => {

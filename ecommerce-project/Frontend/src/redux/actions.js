@@ -18,6 +18,12 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  FETCH_USER_PROFILE_REQUEST,
+  FETCH_USER_PROFILE_SUCCESS,
+  FETCH_USER_PROFILE_FAILURE,
+  UPDATE_USER_PROFILE_REQUEST,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_FAILURE,
   GET_CART_REQUEST,
   GET_CART_SUCCESS,
   GET_CART_FAILURE,
@@ -125,6 +131,31 @@ export const loginFailure = (error) => ({
 });
 
 export const logout = () => ({ type: LOGOUT });
+
+export const fetchUserProfileRequest = () => ({
+  type: FETCH_USER_PROFILE_REQUEST,
+});
+export const fetchUserProfileSuccess = (user) => ({
+  type: FETCH_USER_PROFILE_SUCCESS,
+  payload: user,
+});
+export const fetchUserProfileFailure = (error) => ({
+  type: FETCH_USER_PROFILE_FAILURE,
+  payload: error,
+});
+
+export const updateUserProfileRequest = (user) => ({
+  type: UPDATE_USER_PROFILE_REQUEST,
+  payload: user,
+});
+export const updateUserProfileSuccess = (user) => ({
+  type: UPDATE_USER_PROFILE_SUCCESS,
+  payload: user,
+});
+export const updateUserProfileFailure = (error) => ({
+  type: UPDATE_USER_PROFILE_FAILURE,
+  payload: error,
+});
 
 // cart actions
 export const getCartRequest = (userId) => ({

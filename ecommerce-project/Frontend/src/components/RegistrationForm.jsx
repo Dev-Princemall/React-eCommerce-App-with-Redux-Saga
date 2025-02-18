@@ -27,7 +27,7 @@ export default function RegistrationForm() {
 
     setError(null);
 
-    dispatch(registerRequest({ email, password })); // Fixed payload
+    dispatch(registerRequest({ email, password }));
   };
 
   useEffect(() => {
