@@ -1,63 +1,79 @@
-# React E-Commerce App with Redux Saga
+# E-Commerce Full-Stack Application
 
-This is a fully functional e-commerce web application built with **React**, **Redux**, and **Redux-Saga** for state management. The app includes features like product listing, product details, cart management, and user authentication.
+## 🚀 Project Overview
 
-## Features
+This is a full-stack e-commerce application built using **React, Redux, Redux-Saga, Node.js, Express, and MongoDB**. Users can browse products, add items to the cart, place orders, and track their order history.
 
-- **Product Listing**: Display a list of products.
-- **Product Details**: View detailed information about a specific product.
-- **Shopping Cart**: Add/remove products to/from the cart.
-- **User Authentication**: Login and registration functionality.
-- **Order History**: View past orders.
-- **Responsive Design**: Works seamlessly on desktop and mobile devices.
+## 🏗 Tech Stack
 
-## Technologies Used
+### **Frontend:**
 
-- **Frontend**: React, Redux, Redux-Saga, Axios, React Router
+- React.js
+- Redux & Redux-Saga (State Management)
+- Axios (API Calls)
+- Lucide Icons
+- Tailwind CSS (Styling)
 
-## Getting Started
+### **Backend:**
 
-Follow these instructions to get the project up and running on your local machine.
+- Node.js & Express
+- MongoDB & Mongoose (Database)
+- JWT Authentication
+- Bcrypt (Password Hashing)
 
-### Prerequisites
+---
 
-- Node.js (v16 or higher)
-- npm (v8 or higher)
+## 🔧 Installation & Setup
 
-### Installation
+### **1️⃣ Clone the repository**
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Dev-Princemall/React-eCommerce-App-with-Redux-Saga.git
-   cd React-eCommerce-App-with-Redux-Saga
-   cd frontend
-   ```
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
+```sh
+git clone https://github.com/Dev-Princemall/React-eCommerce-App-with-Redux-Saga.git
+cd ecommerce-project
+```
 
-### Contributing
+### **2️⃣ Backend Setup**
 
-- Contributions are welcome! If you'd like to contribute, please follow these steps:
+```sh
+cd backend
+npm install
+```
 
-1. Fork the repository.
+- Create a `.env` file in the `backend` folder and add:
+  ```env
+  MONGO_URI=your_mongodb_connection_string
+  JWT_SECRET=your_secret_key
+  PORT=5000
+  ```
+- Start the backend server:
 
-2. Create a new branch (git checkout -b feature/YourFeatureName).
+```sh
+npm run dev
+```
 
-3. Commit your changes (git commit -m 'Add some feature').
+### **3️⃣ Frontend Setup**
 
-4. Push to the branch (git push origin feature/YourFeatureName).
+```sh
+cd frontend
+npm install
+```
 
-5. Open a pull request.
+- Start the frontend:
 
-## Contact
+```sh
+npm start
+```
 
-If you have any questions or suggestions, feel free to reach out:
+---
 
-- **Prince Mall** - [GitHub](https://github.com/Dev-Princemall)
-- **Email**: princemall.dev@gmail.com
+## ⚡ Features
+
+✅ **User Authentication (JWT)** – Sign up, login, and secure user sessions. ✅ **Product Listing** – Fetch products from the backend & display dynamically. ✅ **Shopping Cart** – Add/remove items, and persist cart state. ✅ **Order Management** – Place orders, track order history. ✅ **Admin Panel** – Manage products, orders (Future Enhancement).
+
+---
+
+## 👨‍💻 Author
+
+Developed by **[Prince Mall]**
+
+For queries, contact: [[princemall.dev@gmail.com](mailto:princemall.dev@gmail.com)]
